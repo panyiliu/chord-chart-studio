@@ -1,0 +1,14 @@
+.git
+.github
+.idea
+.cursor
+.claude
+node_modules
+**/node_modules
+coverage
+dist
+build
+*.log
+yarn-error.log
+npm-debug.log*
+packages/chord-chart-studio/build

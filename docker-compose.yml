@@ -1,0 +1,22 @@
+services:
+  chord-chart-studio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ghcr.io/panyiliu/chord-chart-studio:local
+    container_name: chord-chart-studio
+    ports:
+      - "8080:80"
+    depends_on:
+      - backup-proxy
+
+  backup-proxy:
+    build:
+      context: ./packages/backup-proxy
+      dockerfile: Dockerfile
+    image: ghcr.io/panyiliu/chord-chart-studio-backup-proxy:local
+    container_name: chord-chart-studio-backup-proxy
+    ports:
+      - "8787:8787"
+    env_file:
+      - ./packages/backup-proxy/.env.example
