@@ -25,6 +25,8 @@ docker compose up -d --build
 - App: `http://localhost:${APP_HOST_PORT}` (default `8080`)
 - Backup proxy: `http://localhost:${BACKUP_PROXY_HOST_PORT}` (default `8787`)
 
+For Docker deployment, frontend backup requests are reverse-proxied by Nginx from `/api/backup/*` to the backup-proxy container, so users usually do not need to set `Node proxy URL` manually in Settings.
+
 Stop:
 
 ```bash

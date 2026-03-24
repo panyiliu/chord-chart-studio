@@ -19,7 +19,47 @@ const LS_LAST_CLOUD_COUNT_KEY = 'chordStudio.backup.lastCloudVersionCount';
 const DEFAULT_OBJECT_KEY = 'chord-chart-studio/backups/latest.json';
 const DEFAULT_ENDPOINT_URL = 'https://s3.us-east-005.backblazeb2.com';
 const DEFAULT_REGION_NAME = 'us-east-005';
-const DEFAULT_PROXY_BASE_URL = 'http://localhost:8787';
+const DEFAULT_PROXY_BASE_URL_LOCAL = 'http://localhost:8787';
+
+function isLocalHostName(hostname) {
+	return (
+		hostname === 'localhost' ||
+		hostname === '127.0.0.1' ||
+		hostname === '::1'
+	);
+}
+
+function getRecommendedProxyBaseUrl() {
+	if (typeof window === 'undefined') {
+		return DEFAULT_PROXY_BASE_URL_LOCAL;
+	}
+	const host = String(window.location?.hostname || '').toLowerCase();
+	// Local dev: keep explicit node proxy port.
+	if (isLocalHostName(host)) {
+		return DEFAULT_PROXY_BASE_URL_LOCAL;
+	}
+	// Server deploy: prefer same-origin reverse proxy to avoid user config.
+	return '';
+}
+
+function normalizeProxyBaseUrl(raw) {
+	const s = String(raw || '').trim();
+	if (!s) {
+		return getRecommendedProxyBaseUrl();
+	}
+	if (typeof window === 'undefined') {
+		return s;
+	}
+	// If user opens app from non-local host, old localhost setting is invalid.
+	const host = String(window.location?.hostname || '').toLowerCase();
+	if (
+		!isLocalHostName(host) &&
+		/^https?:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/i.test(s)
+	) {
+		return '';
+	}
+	return s;
+}
 
 /** Thrown when fetch to the local backup proxy fails (proxy not running, wrong URL, blocked). */
 export const BACKUP_PROXY_UNREACHABLE = 'BACKUP_PROXY_UNREACHABLE';
@@ -92,8 +132,9 @@ export function getBackblazeConfig() {
 		endpointUrl:
 			safeGetItem(LS_B2_ENDPOINT_URL_KEY) ?? DEFAULT_ENDPOINT_URL,
 		regionName: safeGetItem(LS_B2_REGION_NAME_KEY) ?? DEFAULT_REGION_NAME,
-		proxyBaseUrl:
-			safeGetItem(LS_B2_PROXY_BASE_URL_KEY) ?? DEFAULT_PROXY_BASE_URL,
+		proxyBaseUrl: normalizeProxyBaseUrl(
+			safeGetItem(LS_B2_PROXY_BASE_URL_KEY)
+		),
 	};
 }
 
@@ -116,7 +157,7 @@ export function setBackblazeConfig(next) {
 	);
 	safeSetItem(
 		LS_B2_PROXY_BASE_URL_KEY,
-		next?.proxyBaseUrl || DEFAULT_PROXY_BASE_URL
+		normalizeProxyBaseUrl(next?.proxyBaseUrl)
 	);
 }
 
@@ -127,8 +168,7 @@ export function isBackblazeConfigComplete(cfg) {
 		!!cfg?.bucketName &&
 		!!cfg?.objectKey &&
 		!!cfg?.endpointUrl &&
-		!!cfg?.regionName &&
-		!!cfg?.proxyBaseUrl
+		!!cfg?.regionName
 	);
 }
 
@@ -148,7 +188,7 @@ function toProxyPayload(cfg) {
 }
 
 async function postProxy(cfg, path, body = {}) {
-	const base = trimRightSlash(cfg?.proxyBaseUrl || DEFAULT_PROXY_BASE_URL);
+	const base = trimRightSlash(normalizeProxyBaseUrl(cfg?.proxyBaseUrl));
 	let res;
 	try {
 		res = await fetch(`${base}${path}`, {
