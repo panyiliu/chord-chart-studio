@@ -277,6 +277,13 @@ $backupFormThemes: (
 	}
 }
 
+.backupSettingsProxyField {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-top: 8px;
+}
+
 .backupSettingsActions {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));

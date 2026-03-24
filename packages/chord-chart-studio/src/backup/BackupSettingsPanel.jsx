@@ -208,13 +208,13 @@ function BackupSettingsPanel() {
 		const ctx = t(contextKey);
 		if (cat === 'proxy') {
 			return t(
-				'{{ctx}}无法连接到本地 Node 备份代理。请另开终端在项目根目录运行「yarn workspace backup-proxy dev」，并核对设置中的「Node 代理地址」与端口（默认 http://localhost:8787）。',
+				'{{ctx}}无法连接到备份代理。Docker 部署通常无需手填代理地址；如为本机开发，请在项目根目录运行「yarn workspace backup-proxy dev」，或在高级配置里核对「Node 代理地址」（默认 http://localhost:8787）。',
 				{ ctx }
 			);
 		}
 		if (cat === 'incomplete') {
 			return t(
-				'{{ctx}}配置不完整：请填写账号 ID、应用密钥、Bucket、备份对象键、S3 Endpoint、Region 与 Node 代理地址。',
+				'{{ctx}}配置不完整：请填写账号 ID、应用密钥、Bucket、备份对象键、S3 Endpoint、Region。',
 				{ ctx }
 			);
 		}
@@ -696,6 +696,11 @@ Content-Type: application/json
 				</div>
 				<details className="backupSettingsAdvancedFold">
 					<summary>{t('高级配置（默认收起）')}</summary>
+					<p className="backupSettingsHint">
+						{t(
+							'Docker 部署通常无需设置 Node 代理地址，系统会默认走同域代理。'
+						)}
+					</p>
 					<label className={'backupSettingsServerName'}>
 						{t('服务器名称')}
 						<input
@@ -772,18 +777,6 @@ Content-Type: application/json
 						</label>
 						<label>
 							<span className="backupSettingsLabelPlain">
-								{t('Node 代理地址')}
-							</span>
-							<input
-								type={'text'}
-								value={cfg.proxyBaseUrl}
-								onChange={(e) => setField('proxyBaseUrl', e.target.value)}
-								disabled={isWorking}
-								placeholder={t('例如 http://localhost:8787')}
-							/>
-						</label>
-						<label>
-							<span className="backupSettingsLabelPlain">
 								{t('备份对象键（Object Key）')}
 							</span>
 							<input
@@ -797,6 +790,21 @@ Content-Type: application/json
 							/>
 						</label>
 					</div>
+					<details className="backupSettingsApiHelp">
+						<summary>{t('网络与代理（高级，可选）')}</summary>
+						<label className="backupSettingsProxyField">
+							<span className="backupSettingsLabelPlain">
+								{t('Node 代理地址')}
+							</span>
+							<input
+								type={'text'}
+								value={cfg.proxyBaseUrl}
+								onChange={(e) => setField('proxyBaseUrl', e.target.value)}
+								disabled={isWorking}
+								placeholder={t('留空使用同域代理；本机开发可填 http://localhost:8787')}
+							/>
+						</label>
+					</details>
 					<details className="backupSettingsApiHelp">
 						<summary>{t('调用模板说明（?）')}</summary>
 						<div className="backupSettingsApiHelpBlock">
