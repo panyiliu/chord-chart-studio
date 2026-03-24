@@ -10,12 +10,20 @@ See it in action here: https://chord-chart-studio.netlify.app
 
 ### 1) Local Docker run (app + backup proxy)
 
+Copy env template first:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` as needed (ports, image tags, proxy CORS).
+
 ```bash
 docker compose up -d --build
 ```
 
-- App: `http://localhost:8080`
-- Backup proxy: `http://localhost:8787`
+- App: `http://localhost:${APP_HOST_PORT}` (default `8080`)
+- Backup proxy: `http://localhost:${BACKUP_PROXY_HOST_PORT}` (default `8787`)
 
 Stop:
 

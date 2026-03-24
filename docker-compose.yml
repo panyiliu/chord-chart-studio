@@ -3,10 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ghcr.io/panyiliu/chord-chart-studio:local
+    image: ${CHORD_STUDIO_IMAGE}
     container_name: chord-chart-studio
     ports:
-      - "8080:80"
+      - "${APP_HOST_PORT}:${APP_CONTAINER_PORT}"
     depends_on:
       - backup-proxy
 
@@ -14,9 +14,10 @@ services:
     build:
       context: ./packages/backup-proxy
       dockerfile: Dockerfile
-    image: ghcr.io/panyiliu/chord-chart-studio-backup-proxy:local
+    image: ${BACKUP_PROXY_IMAGE}
     container_name: chord-chart-studio-backup-proxy
     ports:
-      - "8787:8787"
-    env_file:
-      - ./packages/backup-proxy/.env.example
+      - "${BACKUP_PROXY_HOST_PORT}:${BACKUP_PROXY_CONTAINER_PORT}"
+    environment:
+      - BACKUP_PROXY_PORT=${BACKUP_PROXY_PORT}
+      - BACKUP_PROXY_CORS_ORIGIN=${BACKUP_PROXY_CORS_ORIGIN}
