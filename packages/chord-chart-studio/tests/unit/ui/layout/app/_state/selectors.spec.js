@@ -45,4 +45,31 @@ describe('ui/layout/app: selectors', () => {
 			expect(selectors.getEditorMode(state)).toBe('myMode');
 		});
 	});
+
+	describe('getPendingBrowserSystemPrint()', () => {
+		test('should return pending print payload or null', () => {
+			const pending = { pdfDocumentTitle: 'T+PDF' };
+			const state = {
+				ui: {
+					layout: {
+						app: {
+							pendingBrowserSystemPrint: pending,
+						},
+					},
+				},
+			};
+			expect(selectors.getPendingBrowserSystemPrint(state)).toBe(pending);
+		});
+
+		test('should return null when missing', () => {
+			const state = {
+				ui: {
+					layout: {
+						app: {},
+					},
+				},
+			};
+			expect(selectors.getPendingBrowserSystemPrint(state)).toBe(null);
+		});
+	});
 });

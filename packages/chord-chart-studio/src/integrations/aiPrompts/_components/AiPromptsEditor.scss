@@ -1,0 +1,43 @@
+@import '../../../../scss/abstract';
+@import '../../../ui/layout/app/_themes';
+
+.aiPromptsEditor {
+	margin-bottom: $spacer-small;
+	padding-bottom: $spacer-small;
+	border-bottom: 1px solid transparent;
+	@include themify($themes) {
+		border-bottom-color: themed('rightBar-border');
+	}
+}
+
+.aiPromptsEditor-title {
+	font-weight: 600;
+	margin-bottom: $spacer-tiny;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.aiPromptsEditor-label {
+	display: block;
+	margin-top: $spacer-tiny;
+	margin-bottom: 2px;
+	@include font-size(small);
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.aiPromptsEditor-textarea {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 6px $spacer-tiny;
+	font: inherit;
+	resize: vertical;
+	@include font-size(small);
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+		background-color: themed('rightBar-bgHover');
+		border: 1px solid themed('rightBar-border');
+	}
+}

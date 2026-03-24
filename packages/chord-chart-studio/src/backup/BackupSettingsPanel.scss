@@ -1,0 +1,352 @@
+@import '../../scss/abstract';
+
+/* Keep theme tokens local to this panel. */
+$backupFormThemes: (
+	light: (
+		form-txt: cv(light-foreground),
+		form-muted: cv(light-foreground, light20),
+		form-field-bg: cv(light-background),
+		form-field-border: cv(light-foreground, light20),
+	),
+	dark: (
+		form-txt: cv(dark-foreground),
+		form-muted: cv(dark-foreground, dark20),
+		form-field-bg: cv(dark-background, light10),
+		form-field-border: cv(dark-foreground, dark30),
+	),
+);
+
+.backupSettingsPanel {
+	display: flex;
+	flex-direction: column;
+	gap: $spacer-small;
+}
+
+.backupSettingsRow {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: $spacer-tiny;
+}
+
+.backupSettingsToggle {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	cursor: pointer;
+
+	span {
+		@include font-size(small);
+		font-weight: $weight-bold;
+	}
+}
+
+.backupSettingsToggle input {
+	cursor: pointer;
+}
+
+.backupSettingsForm {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: $spacer-tiny;
+}
+
+.backupSettingsForm label {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	@include font-size(small);
+	font-weight: $weight-bold;
+}
+
+.backupSettingsLabelWithHelp {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.backupSettingsLabelPlain {
+	display: inline-block;
+}
+
+.backupSettingsHelpWrap {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+}
+
+.backupSettingsHelpBtn {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	border: 1px solid rgba(127, 127, 127, 0.35);
+	background: transparent;
+	cursor: help;
+	padding: 0;
+	line-height: 1;
+	font-weight: $weight-regular;
+	opacity: 0.9;
+}
+
+.backupSettingsHelpBubble {
+	display: none;
+	position: absolute;
+	left: 22px;
+	top: -2px;
+	min-width: 220px;
+	max-width: 320px;
+	padding: 6px 8px;
+	border-radius: 6px;
+	z-index: 20;
+	font-weight: $weight-regular;
+	@include font-size(tiny);
+	@include themify($backupFormThemes) {
+		background-color: themed('form-field-bg');
+		border: 1px solid themed('form-field-border');
+		color: themed('form-txt');
+	}
+}
+
+.backupSettingsHelpWrap:hover .backupSettingsHelpBubble,
+.backupSettingsHelpWrap:focus-within .backupSettingsHelpBubble {
+	display: block;
+}
+
+.backupSettingsForm input {
+	padding: 8px 10px;
+	border-radius: 8px;
+	border: 1px solid transparent;
+	@include themify($backupFormThemes) {
+		background-color: themed('form-field-bg');
+		border-color: themed('form-field-border');
+		color: themed('form-txt');
+	}
+
+	&:focus-visible {
+		outline: 2px solid cv(dark-accent);
+		outline-offset: 2px;
+	}
+
+	&:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+}
+
+.backupSettingsServerRow {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 8px;
+}
+
+.backupSettingsServerRow .Button {
+	margin: 0;
+	@include themify($backupFormThemes) {
+		background-color: themed('form-field-bg');
+		border: 1px solid themed('form-field-border');
+		color: themed('form-txt');
+	}
+}
+
+.backupSettingsServerRow .Button[name='addCloudServer'],
+.backupSettingsServerRow .Button[name='removeCloudServer'] {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 40px;
+	min-height: 40px;
+	width: 40px;
+	min-width: 40px;
+	padding: 0;
+	border-radius: 8px;
+	line-height: 1;
+
+	.icon {
+		margin: 0;
+		@include font-size(normal);
+	}
+}
+
+.backupSettingsServerRow .Button[name='addCloudServer'] {
+	@include themify($backupFormThemes) {
+		color: cv(dark-accent);
+		border-color: cv(dark-accent, light20);
+	}
+}
+
+.backupSettingsServerRow .Button[name='removeCloudServer'] {
+	@include themify($backupFormThemes) {
+		color: themed('form-muted');
+		border-color: themed('form-field-border');
+	}
+}
+
+.backupSettingsServerRow .Button[name='removeCloudServer']:not(.Button-isDisabled) {
+	@include themify($backupFormThemes) {
+		color: #dc2626;
+		border-color: rgba(220, 38, 38, 0.42);
+	}
+}
+
+.backupSettingsServerSelectLabel {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	min-width: 220px;
+	@include font-size(small);
+	font-weight: $weight-bold;
+}
+
+.backupSettingsServerSelectLabel select {
+	padding: 8px 10px;
+	height: 40px;
+	border-radius: 8px;
+	border: 1px solid transparent;
+	@include themify($backupFormThemes) {
+		background-color: themed('form-field-bg');
+		border-color: themed('form-field-border');
+		color: themed('form-txt');
+	}
+}
+
+.backupSettingsServerName {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-top: 10px;
+	@include font-size(small);
+	font-weight: $weight-bold;
+}
+
+.backupSettingsAdvancedFold {
+	margin-top: 8px;
+	border: 1px dashed rgba(127, 127, 127, 0.35);
+	border-radius: 8px;
+	padding: 8px 10px;
+}
+
+.backupSettingsAdvancedFold summary {
+	cursor: pointer;
+	font-weight: $weight-bold;
+}
+
+.backupSettingsHint {
+	margin: 0;
+	line-height: 1.45;
+	@include font-size(small);
+	@include themify($backupFormThemes) {
+		color: themed('form-muted') !important;
+	}
+}
+
+.backupSettingsApiHelp {
+	border: 1px dashed rgba(127, 127, 127, 0.35);
+	border-radius: 8px;
+	padding: 8px 10px;
+}
+
+.backupSettingsApiHelp summary {
+	cursor: pointer;
+	font-weight: $weight-bold;
+}
+
+.backupSettingsApiHelpBlock {
+	margin-top: 8px;
+}
+
+.backupSettingsApiHelpTitle {
+	@include font-size(small);
+	font-weight: $weight-bold;
+	margin-bottom: 4px;
+}
+
+.backupSettingsApiHelp pre {
+	margin: 0;
+	padding: 8px;
+	border-radius: 6px;
+	overflow: auto;
+	font-size: 12px;
+	line-height: 1.4;
+	@include themify($backupFormThemes) {
+		background-color: themed('form-field-bg');
+		border: 1px solid themed('form-field-border');
+		color: themed('form-txt');
+	}
+}
+
+.backupSettingsActions {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+	gap: 10px;
+}
+
+.backupSettingsActionGroup {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	min-width: 200px;
+	padding: 10px;
+	border-radius: 10px;
+	border: 1px solid transparent;
+	@include themify($backupFormThemes) {
+		background-color: themed('form-field-bg');
+		border-color: themed('form-field-border');
+	}
+}
+
+.backupSettingsActionGroupTitle {
+	@include font-size(tiny);
+	font-weight: $weight-bold;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	@include themify($backupFormThemes) {
+		color: themed('form-muted') !important;
+	}
+}
+
+.backupSettingsActionGroup .Button {
+	margin: 2px 0;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.backupSettingsActionGroup .Button .icon {
+	@include font-size(tiny);
+	opacity: 0.9;
+}
+
+.backupSettingsActionGroup--danger {
+	border-style: dashed;
+}
+
+.backupSettingsDangerAction .Button {
+	@include themify($backupFormThemes) {
+		border: 1px solid rgba(220, 38, 38, 0.45);
+		color: #dc2626;
+	}
+}
+
+.backupSettingsDangerAction .Button:hover {
+	@include themify($backupFormThemes) {
+		background-color: rgba(220, 38, 38, 0.08);
+	}
+}
+
+.backupSettingsMeta {
+	margin: 0;
+	@include font-size(small);
+	@include themify($backupFormThemes) {
+		color: themed('form-muted') !important;
+	}
+}
+
+.backupSettingsError {
+	margin: 0;
+	@include font-size(small);
+	color: #dc2626;
+}
+

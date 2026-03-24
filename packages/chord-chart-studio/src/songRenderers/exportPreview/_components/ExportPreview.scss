@@ -1,7 +1,10 @@
 @import '../../../../scss/abstract';
 
 $themes: (
-	light: (),
+	light: (
+		song-txt: cv(light-foreground),
+		song-bg: cv(light-background),
+	),
 	dark: (
 		song-txt: cv(dark-foreground),
 		song-bg: cv(dark-secondary),

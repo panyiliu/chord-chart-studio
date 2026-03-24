@@ -2,4 +2,12 @@
 @import '../_themes.scss';
 
 .sb-optionsPanel {
+	padding: $spacer-small;
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+
+	@include themify($themes) {
+		background-color: themed('optionsGroup-option-bg');
+		border: 1px solid themed('optionsGroup-border');
+	}
 }

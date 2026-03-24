@@ -1,0 +1,16 @@
+{
+  "name": "backup-proxy",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Local proxy for Backblaze B2 backup via S3-compatible API",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.822.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}

@@ -16,6 +16,16 @@ $ yarn start
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
+### Note: Backup Proxy
+
+The app package supports Backblaze B2 private-bucket backup via a local Node proxy package:
+
+```bash
+yarn workspace backup-proxy dev
+```
+
+See `packages/backup-proxy/README.md` and `packages/chord-chart-studio/README.md` for setup and endpoint details.
+
 ### Build
 
 ```

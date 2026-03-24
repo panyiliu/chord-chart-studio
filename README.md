@@ -13,3 +13,4 @@ See it in action here: https://chord-chart-studio.netlify.app
 | [chord-chart-studio](https://github.com/no-chris/chord-chart-studio/tree/master/packages/chord-chart-studio) | The main application source code                                                  |
 | [documentation](https://github.com/no-chris/chord-chart-studio/tree/master/packages/documentation)           | The documentation website                                                         |
 | [webextension](https://github.com/no-chris/chord-chart-studio/tree/master/packages/webextension)             | Highly experimental browser extension to import chord charts from other websites. |
+| `backup-proxy`                                                                                                  | Local Node proxy for Backblaze B2 private-bucket backup (S3-compatible API).     |

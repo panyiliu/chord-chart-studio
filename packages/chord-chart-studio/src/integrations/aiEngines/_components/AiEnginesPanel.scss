@@ -1,0 +1,230 @@
+@import '../../../../scss/abstract';
+@import '../../../ui/layout/app/_themes';
+
+.aiEnginesPanel {
+	padding: $spacer-small;
+	border-bottom: 1px solid transparent;
+	@include themify($themes) {
+		border-bottom-color: themed('rightBar-border');
+	}
+}
+
+.aiEnginesPanel-title {
+	font-weight: 600;
+	margin-bottom: $spacer-tiny;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.aiEnginesPanel-hint,
+.aiEnginesPanel-empty {
+	margin: 0 0 $spacer-small;
+	@include font-size(small);
+	opacity: 0.85;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.aiEnginesPanel-list {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 $spacer-small;
+}
+
+.aiEnginesPanel-item {
+	margin-bottom: $spacer-small;
+}
+
+.aiEnginesPanel-itemEditing {
+	padding-left: 4px;
+	border-left: 3px solid transparent;
+	@include themify($themes) {
+		border-left-color: themed('rightBar-border');
+	}
+}
+
+.aiEnginesPanel-formTitle {
+	font-weight: 600;
+	margin-top: $spacer-small;
+	margin-bottom: $spacer-tiny;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.aiEnginesPanel-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 4px;
+	margin-bottom: 0;
+}
+
+.aiEnginesPanel-radioLabel {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	flex: 1;
+	min-width: 0;
+	cursor: pointer;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.aiEnginesPanel-engineName {
+	font-weight: 500;
+}
+
+.aiEnginesPanel-engineMeta {
+	opacity: 0.75;
+	@include font-size(small);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.aiEnginesPanel-test,
+.aiEnginesPanel-edit {
+	flex: 0 0 auto;
+	cursor: pointer;
+	padding: 2px 6px;
+	font: inherit;
+	@include font-size(small);
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+		background-color: themed('rightBar-bgHover');
+		border: 1px solid themed('rightBar-border');
+	}
+}
+
+.aiEnginesPanel-remove {
+	flex: 0 0 auto;
+	cursor: pointer;
+	border: none;
+	background: transparent;
+	padding: 0 4px;
+	font-size: 1.4rem;
+	line-height: 1;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.aiEnginesPanel-testLine {
+	margin-top: 4px;
+	padding: 4px 6px;
+	word-break: break-word;
+	@include font-size(small);
+	opacity: 0.9;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+		background-color: themed('rightBar-bg');
+		border: 1px solid themed('rightBar-border');
+	}
+}
+
+.aiEnginesPanel-testDetails {
+	margin-top: 6px;
+	@include font-size(small);
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.aiEnginesPanel-testDetailsSummary {
+	cursor: pointer;
+	user-select: none;
+	padding: 2px 0;
+}
+
+.aiEnginesPanel-debugPre {
+	margin: 6px 0 0;
+	padding: 6px 8px;
+	max-height: 280px;
+	overflow: auto;
+	white-space: pre-wrap;
+	word-break: break-word;
+	font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+	@include font-size(small);
+	line-height: 1.35;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+		background-color: themed('rightBar-bg');
+		border: 1px solid themed('rightBar-border');
+	}
+}
+
+.aiEnginesPanel-form {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.aiEnginesPanel-label {
+	font-size: 11px;
+	margin-top: $spacer-tiny;
+	margin-bottom: 2px;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.aiEnginesPanel-fieldHint {
+	margin: 0 0 $spacer-tiny;
+	line-height: 1.35;
+	@include font-size(small);
+	opacity: 0.88;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.aiEnginesPanel-input {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 4px $spacer-tiny;
+	margin-bottom: $spacer-tiny;
+	font: inherit;
+	@include font-size(small);
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+		background-color: themed('rightBar-bgHover');
+		border: 1px solid themed('rightBar-border');
+	}
+}
+
+.aiEnginesPanel-formActions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: $spacer-tiny;
+	margin-top: $spacer-small;
+}
+
+.aiEnginesPanel-submit {
+	align-self: flex-start;
+	padding: 4px $spacer-small;
+	cursor: pointer;
+	font: inherit;
+	@include font-size(small);
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+		background-color: themed('rightBar-bgHover');
+		border: 1px solid themed('rightBar-border');
+	}
+}
+
+.aiEnginesPanel-cancelEdit {
+	padding: 4px $spacer-small;
+	cursor: pointer;
+	font: inherit;
+	@include font-size(small);
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+		background-color: transparent;
+		border: 1px solid themed('rightBar-border');
+	}
+}

@@ -3,10 +3,12 @@
 
 .sb-optionToggle {
 	display: flex;
+	border-radius: 8px;
 
 	@include font-size(small);
 
 	padding: $spacer-tiny $spacer-small-plus $spacer-tiny $spacer-small;
+	transition: $transition-interactive;
 
 	@include themify($themes) {
 		border-bottom: 1px dotted themed('option-border');
@@ -35,6 +37,7 @@
 		@include themify($themes) {
 			background-color: themed('option-bgHover');
 		}
+		box-shadow: 0 10px 24px rgba(2, 6, 23, 0.12);
 	}
 }
 

@@ -1,13 +1,157 @@
 @import '././././scss/abstract';
 
 $themes: (
-	light: (),
+	light: (
+		song-txt: cv(light-foreground),
+		song-bg: cv(light-foreground, light20),
+		desktop-bg: cv(light-background),
+		export-btn-bg: cv(light-accent),
+		export-btn-fg: cv(light-secondary),
+		printPreview-aside-border: cv(light-foreground, light20),
+	),
 	dark: (
 		song-txt: cv(dark-background),
 		song-bg: cv(dark-foreground),
 		desktop-bg: cv(dark-secondary),
+		export-btn-bg: cv(dark-accent),
+		export-btn-fg: cv(dark-background),
+		printPreview-aside-border: rgba(255, 255, 255, 0.1),
 	),
 );
+
+.printPreviewShell {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	width: 100%;
+	min-height: 100%;
+	box-sizing: border-box;
+
+	@include themify($themes) {
+		background-color: themed('desktop-bg');
+	}
+}
+
+.printPreviewShell-scroll {
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: auto;
+}
+
+.printPreviewShell-aside {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	padding: $spacer-medium $spacer-small;
+
+	@include themify($themes) {
+		border-left: 1px solid themed('printPreview-aside-border');
+		color: themed('song-txt');
+	}
+}
+
+.printPreviewShell-asideStack {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: $spacer-medium;
+	width: 100%;
+}
+
+.printPreviewShell-systemPrintBlock {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: $spacer-tiny;
+	max-width: 14rem;
+	width: 100%;
+}
+
+.printPreviewShell-systemPrintHint {
+	margin: 0;
+	@include font-size(tiny);
+	line-height: $line-height-s;
+	text-align: center;
+	opacity: 0.88;
+	overflow-wrap: anywhere;
+	word-break: break-word;
+
+	@include themify($themes) {
+		color: themed('song-bg');
+	}
+}
+
+.printPreviewShell-exportBlock {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: $spacer-tiny;
+	max-width: 14rem;
+	width: 100%;
+}
+
+.printPreviewShell-exportBtn {
+	font-family: inherit;
+	@include font-size(normal);
+	font-weight: $weight-bold;
+	padding: $spacer-tiny-plus $spacer-medium;
+	border-radius: 6px;
+	cursor: pointer;
+	width: 100%;
+	text-align: center;
+	white-space: normal;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+
+	@include themify($themes) {
+		background: themed('export-btn-bg');
+		color: themed('export-btn-fg');
+	}
+
+	&:hover:not(:disabled) {
+		filter: brightness(1.06);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+	}
+
+	&:active:not(:disabled) {
+		filter: brightness(0.98);
+	}
+
+	&:disabled {
+		opacity: 0.65;
+		cursor: not-allowed;
+		filter: grayscale(0.15);
+	}
+}
+
+.printPreviewShell-exportHint {
+	margin: 0;
+	@include font-size(tiny);
+	line-height: $line-height-s;
+	text-align: center;
+	opacity: 0.62;
+	overflow-wrap: anywhere;
+	word-break: break-word;
+
+	@include themify($themes) {
+		color: themed('song-bg');
+	}
+}
+
+@media print {
+	.printPreviewShell {
+		display: block;
+	}
+
+	.printPreviewShell-scroll {
+		overflow: visible;
+	}
+
+	.printPreviewShell-aside {
+		display: none !important;
+	}
+}
 
 .printPreview {
 	overflow: hidden;
@@ -127,5 +271,15 @@ $themes: (
 .cmTheme-print {
 	.cmSong {
 		padding: 0 !important;
+	}
+}
+
+// Print/PDF preview: chord symbols only (lyrics unchanged). Values from options via CSS vars.
+.printPreview {
+	.cmChordSymbol {
+		color: var(--print-chord-color, #1565c0);
+		font-size: calc(1em * var(--print-chord-scale, 1.15));
+		font-weight: var(--print-chord-weight, 600);
+		text-shadow: var(--print-chord-text-shadow, none);
 	}
 }

@@ -1,9 +1,21 @@
 @import '../../../../scss/abstract';
+@import '../../../ui/layout/app/_themes';
+@import '../../../ui/layout/app/_components/HeaderQuickActions.scss';
 
 .renderingOptionsPanel-isExpanded {
 	.rightBar-isCollapsed & {
 		display: none;
 	}
+}
+
+.renderingOptionsPanel-quickActions {
+	display: flex;
+	flex-direction: row;
+	gap: 8px;
+	align-items: center;
+	justify-content: flex-end;
+	margin: 0 0 $spacer-small;
+	padding-right: 2px;
 }
 
 .renderingOptionsPanel-isCollapsed {

@@ -30,6 +30,17 @@ function FileEntry(props) {
 		}
 	}, [isRenamed, inputRef]);
 
+	// 当模型写入 title 后，左侧列表需同步更新显示。
+	// 由于这里使用了本地 state，需要手动在非重命名态时跟随 props.title 变化。
+	useEffect(() => {
+		if (isRenamed) {
+			return;
+		}
+		if (props.title !== title) {
+			setTitle(props.title);
+		}
+	}, [props.title, isRenamed, title]);
+
 	function handleClick() {
 		if (!isSelected) {
 			selectFile(fileId);

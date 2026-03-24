@@ -79,6 +79,7 @@ export default {
 
 			groupWidgetsOrder: [
 				'transposeValue',
+				'transposeStepButtons',
 				'preferredAccidentals',
 				'symbolType',
 			],
@@ -90,6 +91,20 @@ export default {
 						min: -11,
 						max: 11,
 						showPlusSymbol: true,
+					},
+					option: {
+						context: 'songPreferences',
+						key: 'transposeValue',
+					},
+				},
+
+				transposeStepButtons: {
+					label: '',
+					type: 'transposeStepButtons',
+					typeOptions: {
+						min: -11,
+						max: 11,
+						step: 1,
 					},
 					option: {
 						context: 'songPreferences',
@@ -236,6 +251,12 @@ export default {
 			icon: 'view_compact',
 
 			groupWidgetsOrder: [
+				'printPdfChordSection',
+				'printChordColor',
+				'printChordSizePercent',
+				'printChordBold',
+				'printChordShadowStrength',
+				'pageLayoutSection',
 				'fontSize',
 				'columnsCount',
 				'columnBreakOnSection',
@@ -243,6 +264,99 @@ export default {
 			],
 
 			allGroupWidgets: {
+				printPdfChordSection: {
+					label: 'Print / PDF — chord style',
+					type: 'sectionHeading',
+				},
+
+				printChordColor: {
+					label: 'Chord color',
+					type: 'select',
+					typeOptions: {
+						allChoices: [
+							{
+								id: 'printChordColorInherit',
+								label: 'Same as lyrics',
+								value: 'inherit',
+							},
+							{
+								id: 'printChordColorBlue',
+								label: 'Blue',
+								value: 'blue',
+							},
+							{
+								id: 'printChordColorTeal',
+								label: 'Teal',
+								value: 'teal',
+							},
+							{
+								id: 'printChordColorRed',
+								label: 'Red',
+								value: 'red',
+							},
+							{
+								id: 'printChordColorPurple',
+								label: 'Purple',
+								value: 'purple',
+							},
+							{
+								id: 'printChordColorBlack',
+								label: 'Black',
+								value: 'black',
+							},
+						],
+					},
+					option: {
+						context: 'songFormatting',
+						key: 'printChordColor',
+					},
+				},
+
+				printChordSizePercent: {
+					label: 'Chord size',
+					type: 'slider',
+					typeOptions: {
+						min: 80,
+						max: 140,
+						step: 5,
+						valueSuffix: '%',
+						showPlusSymbol: false,
+					},
+					option: {
+						context: 'songFormatting',
+						key: 'printChordSizePercent',
+					},
+				},
+
+				printChordBold: {
+					label: 'Bold chord symbols',
+					type: 'toggle',
+					option: {
+						context: 'songFormatting',
+						key: 'printChordBold',
+					},
+				},
+
+				printChordShadowStrength: {
+					label: 'Chord shadow',
+					type: 'slider',
+					typeOptions: {
+						min: 0,
+						max: 100,
+						step: 5,
+						showPlusSymbol: false,
+					},
+					option: {
+						context: 'songFormatting',
+						key: 'printChordShadowStrength',
+					},
+				},
+
+				pageLayoutSection: {
+					label: 'Page',
+					type: 'sectionHeading',
+				},
+
 				fontSize: {
 					label: 'Font size',
 					type: 'slider',

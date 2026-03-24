@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Icon from '../../../_components/Icon';
+import { useI18n } from '../../../i18n/I18nProvider';
 
 function Toggle(props) {
 	const {
@@ -14,6 +15,7 @@ function Toggle(props) {
 		optionValue,
 		setOption,
 	} = props;
+	const { t } = useI18n();
 
 	const classNames = ['sb-optionToggle'];
 	classNames.push(
@@ -32,7 +34,7 @@ function Toggle(props) {
 			className={classNames.join(' ')}
 			onClick={isInteractable ? handleClick : null}
 		>
-			<div className={'sb-optionToggle-desc'}>{label}</div>
+			<div className={'sb-optionToggle-desc'}>{t(label)}</div>
 			<div className={'sb-optionToggle-icon'}>
 				<span className={'sb-optionToggle-icon'}>
 					<Icon

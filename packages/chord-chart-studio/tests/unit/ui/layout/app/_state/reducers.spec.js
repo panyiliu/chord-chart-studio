@@ -62,12 +62,58 @@ describe('ui/layout/app: reducers', () => {
 			);
 			expect(newState.editorMode).toBe('myMode1');
 		});
+
+		test('should clear pendingBrowserSystemPrint when leaving print mode', () => {
+			const withPending = reducers(
+				initialState,
+				actions.requestBrowserSystemPrint({ pdfDocumentTitle: 'A+PDF' })
+			);
+			const inPrint = reducers(
+				withPending,
+				actions.setEditorMode('print')
+			);
+			expect(inPrint.pendingBrowserSystemPrint).toEqual({
+				pdfDocumentTitle: 'A+PDF',
+			});
+
+			const backToEdit = reducers(inPrint, actions.setEditorMode('edit'));
+			expect(backToEdit.pendingBrowserSystemPrint).toBe(null);
+		});
+	});
+
+	describe(actionsTypes.UI_LAYOUT_APP_REQUEST_BROWSER_SYSTEM_PRINT, () => {
+		test('should set pendingBrowserSystemPrint', () => {
+			const newState = reducers(
+				initialState,
+				actions.requestBrowserSystemPrint({
+					pdfDocumentTitle: 'Song+PDF',
+				})
+			);
+			expect(newState.pendingBrowserSystemPrint).toEqual({
+				pdfDocumentTitle: 'Song+PDF',
+			});
+		});
+	});
+
+	describe(actionsTypes.UI_LAYOUT_APP_CLEAR_BROWSER_SYSTEM_PRINT, () => {
+		test('should clear pendingBrowserSystemPrint', () => {
+			const withPending = reducers(
+				initialState,
+				actions.requestBrowserSystemPrint({ pdfDocumentTitle: 'X+PDF' })
+			);
+			const cleared = reducers(
+				withPending,
+				actions.clearBrowserSystemPrint()
+			);
+			expect(cleared.pendingBrowserSystemPrint).toBe(null);
+		});
 	});
 
 	describe(dbActionsTypes.DB_FILES_CREATE, () => {
 		test('should switch to edit mode when creating file', () => {
 			const state = {
 				editorMode: 'play',
+				pendingBrowserSystemPrint: { pdfDocumentTitle: 'Z+PDF' },
 			};
 
 			const newState = reducers(
@@ -75,6 +121,7 @@ describe('ui/layout/app: reducers', () => {
 				dbActions.createFile('myFile', '')
 			);
 			expect(newState.editorMode).toBe('edit');
+			expect(newState.pendingBrowserSystemPrint).toBe(null);
 		});
 	});
 

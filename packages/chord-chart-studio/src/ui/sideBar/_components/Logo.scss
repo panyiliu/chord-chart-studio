@@ -1,9 +1,13 @@
 @import '../../../../scss/abstract';
 
 $themes: (
-	light: (),
+	light: (
+		logo-txt: cv(light-foreground),
+		logo-svg-fill: cv(light-foreground),
+	),
 	dark: (
 		logo-txt: cv(dark-foreground),
+		logo-svg-fill: #ffffff,
 	),
 );
 
@@ -21,7 +25,9 @@ $themes: (
 	margin: 0 auto;
 	width: 70%;
 	svg {
-		fill: #fff;
+		@include themify($themes) {
+			fill: themed('logo-svg-fill');
+		}
 		aspect-ratio: 1.25 / 1;
 		width: 80%;
 		margin: 5px auto 10px auto;

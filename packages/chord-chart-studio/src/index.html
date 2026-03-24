@@ -20,7 +20,7 @@
 			rel="stylesheet"
 		/>
 		<link
-			href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..700;1,300..700&display=swap"
 			rel="stylesheet"
 		/>
 		<link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -45,6 +45,42 @@
 		</script>
 	</head>
 	<body>
-		<div id="app" class="theme-dark"></div>
+		<div id="app"></div>
+		<script>
+			(function () {
+				var el = document.getElementById('app');
+				if (!el) return;
+				var t = 'theme-dark';
+				try {
+					var raw = localStorage.getItem('state');
+					if (!raw) {
+						if (
+							window.matchMedia &&
+							window.matchMedia('(prefers-color-scheme: light)').matches
+						) {
+							t = 'theme-light';
+						}
+					} else {
+						var p = JSON.parse(raw);
+						var v =
+							p &&
+							p.db &&
+							p.db.options &&
+							p.db.options.editorPreferences &&
+							p.db.options.editorPreferences.values &&
+							p.db.options.editorPreferences.values.uiColorScheme;
+						if (v === 'light') t = 'theme-light';
+						else if (v === 'dark') t = 'theme-dark';
+						else if (
+							v === 'system' &&
+							window.matchMedia &&
+							window.matchMedia('(prefers-color-scheme: light)').matches
+						)
+							t = 'theme-light';
+					}
+				} catch (e) {}
+				el.classList.add(t);
+			})();
+		</script>
 	</body>
 </html>

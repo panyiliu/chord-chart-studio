@@ -96,6 +96,9 @@ body,
 .rightBar-content {
 	overflow-y: scroll;
 	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	gap: $spacer-tiny;
 
 	.rightBar-isCollapsed & {
 		padding: $spacer-tiny $spacer-small;
@@ -105,10 +108,26 @@ body,
 	}
 }
 
+.rightBar-mainTools {
+	display: flex;
+	flex-direction: column;
+	gap: $spacer-tiny;
+}
+
+.rightBar-footerMeta {
+	margin-top: auto;
+	padding-top: $spacer-small;
+	border-top: 1px solid transparent;
+	@include themify($themes) {
+		border-top-color: themed('rightBar-border');
+	}
+}
+
 .leftBar-collapser {
 	flex: 0 0 12px;
 	display: flex;
 	cursor: pointer;
+	transition: $transition-interactive;
 
 	.leftBar-isCollapsed & {
 		display: none;
@@ -142,6 +161,7 @@ body,
 	flex: 0 0 12px;
 	display: flex;
 	cursor: pointer;
+	transition: $transition-interactive;
 
 	.rightBar-isCollapsed & {
 		display: none;
@@ -183,6 +203,7 @@ body,
 
 .appLayout-header {
 	flex-shrink: 0;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12);
 
 	@include themify($themes) {
 		color: themed('header-txt');
@@ -193,6 +214,20 @@ body,
 	@media print {
 		display: none;
 	}
+}
+
+.appLayout-headerRow {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	justify-content: space-between;
+	gap: 4px;
+	min-height: 48px;
+}
+
+.appLayout-headerNav {
+	flex: 1 1 auto;
+	min-width: 0;
 }
 
 .appLayout-content {

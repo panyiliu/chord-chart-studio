@@ -3,7 +3,12 @@ import { v4 as uuidv4 } from 'uuid';
 import createAction from '../../core/createAction';
 import * as actionTypes from './actionsTypes';
 
-export const createFile = (title, content = '') => {
+/**
+ * @param {string} title
+ * @param {string} [content]
+ * @param {{ author?: string, genreId?: string | null, tagIds?: string[] }} [meta]
+ */
+export const createFile = (title, content = '', meta = {}) => {
 	if (!title) {
 		throw new TypeError('Cannot create a file without title');
 	}
@@ -11,11 +16,19 @@ export const createFile = (title, content = '') => {
 		id: uuidv4(),
 		title,
 		content,
+		author: meta.author ?? '',
+		genreId: meta.genreId ?? null,
+		tagIds: Array.isArray(meta.tagIds) ? meta.tagIds : [],
 	};
 	return createAction(actionTypes.DB_FILES_CREATE, payload);
 };
 
-export const importFile = (title, content = '') => {
+/**
+ * @param {string} title
+ * @param {string} [content]
+ * @param {{ author?: string, genreId?: string | null, tagIds?: string[] }} [meta]
+ */
+export const importFile = (title, content = '', meta = {}) => {
 	if (!title) {
 		throw new TypeError('Cannot import a file without title');
 	}
@@ -23,19 +36,27 @@ export const importFile = (title, content = '') => {
 		id: uuidv4(),
 		title,
 		content,
+		author: meta.author ?? '',
+		genreId: meta.genreId ?? null,
+		tagIds: Array.isArray(meta.tagIds) ? meta.tagIds : [],
 	};
 	return createAction(actionTypes.DB_FILES_IMPORT, payload);
 };
 
-export const updateFile = (id, { title, content } = {}) => {
+/**
+ * @param {string} id
+ * @param {{ title?: string, content?: string, author?: string, genreId?: string | null, tagIds?: string[] }} [patch]
+ */
+export const updateFile = (id, patch = {}) => {
 	if (!id) {
 		throw new TypeError('Cannot update a file without an id');
 	}
-	const payload = {
-		id,
-		title,
-		content,
-	};
+	const payload = { id };
+	if (patch.title !== undefined) payload.title = patch.title;
+	if (patch.content !== undefined) payload.content = patch.content;
+	if (patch.author !== undefined) payload.author = patch.author;
+	if (patch.genreId !== undefined) payload.genreId = patch.genreId;
+	if (patch.tagIds !== undefined) payload.tagIds = patch.tagIds;
 	return createAction(actionTypes.DB_FILES_UPDATE, payload);
 };
 

@@ -2,6 +2,9 @@ import {
 	UI_LAYOUT_APP_TOGGLE_RIGHT_BAR,
 	UI_LAYOUT_APP_TOGGLE_LEFT_BAR,
 	UI_LAYOUT_APP_SET_EDITOR_MODE,
+	UI_LAYOUT_APP_SET_AI_SETTINGS_OPEN,
+	UI_LAYOUT_APP_REQUEST_BROWSER_SYSTEM_PRINT,
+	UI_LAYOUT_APP_CLEAR_BROWSER_SYSTEM_PRINT,
 } from './actionsTypes';
 
 import {
@@ -15,6 +18,9 @@ const initialState = {
 	isRightBarCollapsed: false,
 	editorMode: 'edit',
 	activeModal: 'none',
+	aiSettingsOpen: false,
+	/** @type {null | { pdfDocumentTitle: string }} */
+	pendingBrowserSystemPrint: null,
 };
 
 export default function reducers(state = initialState, action = {}) {
@@ -36,6 +42,28 @@ export default function reducers(state = initialState, action = {}) {
 			return {
 				...state,
 				editorMode: mode,
+				...(mode !== 'print'
+					? { pendingBrowserSystemPrint: null }
+					: {}),
+			};
+		}
+		case UI_LAYOUT_APP_REQUEST_BROWSER_SYSTEM_PRINT: {
+			const { pdfDocumentTitle } = action.payload;
+			return {
+				...state,
+				pendingBrowserSystemPrint: { pdfDocumentTitle },
+			};
+		}
+		case UI_LAYOUT_APP_CLEAR_BROWSER_SYSTEM_PRINT: {
+			return {
+				...state,
+				pendingBrowserSystemPrint: null,
+			};
+		}
+		case UI_LAYOUT_APP_SET_AI_SETTINGS_OPEN: {
+			return {
+				...state,
+				aiSettingsOpen: Boolean(action.payload.open),
 			};
 		}
 		case DB_FILES_DELETE:
@@ -44,6 +72,7 @@ export default function reducers(state = initialState, action = {}) {
 			return {
 				...state,
 				editorMode: 'edit',
+				pendingBrowserSystemPrint: null,
 			};
 		}
 	}

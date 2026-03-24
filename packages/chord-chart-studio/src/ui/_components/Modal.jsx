@@ -1,10 +1,15 @@
 import './Modal.scss';
 
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
+
+import { useEffectiveUiTheme } from '../theme/useEffectiveUiTheme';
 
 function Modal(props) {
 	const { children, closeModal } = props;
+	const uiTheme = useEffectiveUiTheme();
+	const themeClass = uiTheme === 'dark' ? 'theme-dark' : 'theme-light';
 
 	useEffect(() => {
 		const handleKeyboard = (e) => {
@@ -19,8 +24,9 @@ function Modal(props) {
 		};
 	});
 
-	return (
-		<section className={'mod-ModalContainer'}>
+	// Portal 挂在 body 上，必须在节点上带 theme-*，否则位于 #app 外时 themify 不生效。
+	const node = (
+		<section className={`mod-ModalContainer ${themeClass}`}>
 			<div
 				className={'mod-Overlay'}
 				onClick={closeModal}
@@ -29,6 +35,8 @@ function Modal(props) {
 			<div className={'mod-ContentContainer'}>{children}</div>
 		</section>
 	);
+
+	return createPortal(node, document.body);
 }
 
 Modal.propTypes = {

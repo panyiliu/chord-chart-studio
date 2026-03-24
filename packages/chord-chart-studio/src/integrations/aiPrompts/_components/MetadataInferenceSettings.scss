@@ -1,0 +1,71 @@
+@import '../../../../scss/abstract';
+
+.metadataInferenceSettings {
+	text-align: left;
+	padding: $spacer-small 0;
+}
+
+.metadataInferenceSettings-hint {
+	margin: 0 0 $spacer-small !important;
+	line-height: 1.5;
+	@include font-size(small);
+	opacity: 0.92;
+}
+
+.metadataInferenceSettings-label {
+	display: block;
+	margin: $spacer-tiny 0 4px;
+	font-weight: $weight-bold;
+	@include font-size(small);
+}
+
+.metadataInferenceSettings-note {
+	margin: 0 0 $spacer-small;
+	@include font-size(small);
+	opacity: 0.86;
+}
+
+.metadataInferenceSettings-select {
+	width: 100%;
+	box-sizing: border-box;
+	margin-bottom: $spacer-small;
+	cursor: pointer;
+	transition: $transition-interactive;
+}
+
+.metadataInferenceSettings-textarea {
+	width: 100%;
+	box-sizing: border-box;
+	margin-bottom: $spacer-small;
+	font-family: $font-family-monospace;
+	line-height: 1.45;
+	resize: vertical;
+	min-height: 4rem;
+	transition: $transition-interactive;
+}
+
+.metadataInferenceSettings-textarea--tall {
+	min-height: 14rem;
+}
+
+.metadataInferenceSettings-keys {
+	margin-top: $spacer-small;
+	padding: $spacer-small;
+	border-radius: 8px;
+	border: 1px dashed cv(dark-foreground, dark30);
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.metadataInferenceSettings-keysTitle {
+	@include font-size(tiny);
+	margin-bottom: 6px;
+	opacity: 0.85;
+}
+
+.metadataInferenceSettings-keysCode {
+	display: block;
+	white-space: pre-wrap;
+	word-break: break-word;
+	@include font-size(tiny);
+	line-height: 1.4;
+}

@@ -27,6 +27,10 @@ function OptionsPanel(props) {
 		.map((widgetId) => {
 			widget = allWidgets.allWidgets[widgetId];
 
+			if (!widget) {
+				return null;
+			}
+
 			if (widget.type === 'optionsGroup') {
 				renderedGroupWidgets = widget.groupWidgetsOrder
 					.filter((groupWidgetId) => {
@@ -34,6 +38,10 @@ function OptionsPanel(props) {
 					})
 					.map((groupWidgetId) => {
 						groupWidget = widget.allGroupWidgets[groupWidgetId];
+
+						if (!groupWidget) {
+							return null;
+						}
 
 						isGroupWidgetInteractable =
 							!nonInteractableWidgets.includes(widgetId) &&
@@ -74,7 +82,15 @@ function OptionsPanel(props) {
 		});
 
 	function renderWidget(widgetId, localWidget, isInteractable) {
+		if (!localWidget) {
+			return null;
+		}
+
 		WidgetComponent = getEntryComponent(localWidget.type);
+
+		if (localWidget.type === 'sectionHeading') {
+			return <WidgetComponent key={widgetId} label={localWidget.label} />;
+		}
 
 		return (
 			<WidgetComponent

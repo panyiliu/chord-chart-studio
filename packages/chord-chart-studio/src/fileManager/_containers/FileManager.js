@@ -9,9 +9,13 @@ import {
 
 import { createFile, updateFile, deleteFile } from '../../db/files/actions';
 import { startImport } from '../../songImporter/_state/actions';
-import { setEditorMode } from '../../ui/layout/app/_state/actions';
+import {
+	setEditorMode,
+	requestBrowserSystemPrint,
+} from '../../ui/layout/app/_state/actions';
 
 import { getAllTitles } from '../../db/files/selectors';
+import { getGenres, getTags } from '../../db/catalog/selectors';
 
 import FileManager from '../_components/FileManager';
 
@@ -21,6 +25,8 @@ export default connect(
 		renamed: getRenamedId(state),
 		defaultTitle: getDefaultTitle(state),
 		allTitles: getAllTitles(state),
+		genres: getGenres(state),
+		tags: getTags(state),
 	}),
 
 	{
@@ -30,6 +36,7 @@ export default connect(
 		updateFile,
 		enableRename,
 		setEditorMode,
+		requestBrowserSystemPrint,
 		startImport,
 	}
 )(FileManager);

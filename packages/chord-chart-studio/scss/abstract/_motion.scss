@@ -1,0 +1,11 @@
+// Shared motion tokens (ui: 150–300ms, prefers-reduced-motion in _base.scss)
+$transition-fast: 150ms ease;
+$transition-base: 200ms ease;
+$transition-slow: 280ms ease;
+
+$transition-interactive:
+	color $transition-base,
+	background-color $transition-base,
+	border-color $transition-base,
+	box-shadow $transition-base,
+	opacity $transition-base;

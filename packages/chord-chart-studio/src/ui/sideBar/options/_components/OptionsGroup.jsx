@@ -4,9 +4,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Icon from '../../../_components/Icon';
+import { useI18n } from '../../../i18n/I18nProvider';
 
 function OptionsGroup(props) {
 	const { isInteractable, icon, label } = props;
+	const { t } = useI18n();
 
 	const classNames = ['sb-optionsGroup'];
 	if (!shouldBeInteractable()) {
@@ -23,7 +25,7 @@ function OptionsGroup(props) {
 				<span className={'sb-optionsGroup-iconTitle'}>
 					<Icon iconName={icon} />
 				</span>{' '}
-				{label}
+				{t(label)}
 			</div>
 			<div className={'sb-optionsGroup-content'}>{props.children}</div>
 		</div>

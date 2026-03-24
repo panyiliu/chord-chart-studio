@@ -1,0 +1,145 @@
+@import '../../../../scss/abstract';
+
+$themes: (
+	light: (
+		metaLog-overlay: rgba(15, 23, 42, 0.35),
+		metaLog-panel-bg: cv(light-secondary),
+		metaLog-border: cv(light-foreground, light20),
+		metaLog-txt: cv(light-foreground, fade),
+		metaLog-muted: cv(light-foreground, light20),
+	),
+	dark: (
+		metaLog-overlay: rgba(0, 0, 0, 0.45),
+		metaLog-panel-bg: cv(dark-secondary, dark5),
+		metaLog-border: cv(dark-secondary, light10),
+		metaLog-txt: cv(dark-foreground, fade),
+		metaLog-muted: cv(dark-foreground, light20),
+	),
+);
+
+.mod-MetadataInferenceLogModal {
+	position: fixed;
+	inset: 0;
+	z-index: 12000;
+	pointer-events: none;
+}
+
+.mod-MetadataInferenceLogModal-overlay {
+	position: absolute;
+	inset: 0;
+	/* 允许点击底层 UI（例如继续操作 AI 分析按钮）；仅弹窗面板接管交互 */
+	pointer-events: none;
+	@include themify($themes) {
+		background: themed('metaLog-overlay');
+	}
+}
+
+.mod-MetadataInferenceLogModal-panel {
+	position: absolute;
+	left: 50%;
+	top: auto;
+	bottom: 16px;
+	transform: translate(-50%, 0);
+	width: min(920px, calc(100vw - 32px));
+	max-height: min(72vh, 720px);
+	display: flex;
+	flex-direction: column;
+	pointer-events: auto;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+
+	@include themify($themes) {
+		background-color: themed('metaLog-panel-bg');
+		border: 1px solid themed('metaLog-border');
+		color: themed('metaLog-txt');
+	}
+}
+
+.mod-MetadataInferenceLogModal-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: $spacer-small;
+	padding: 10px 14px;
+	flex: 0 0 auto;
+	@include font-size(small);
+}
+
+.mod-MetadataInferenceLogModal-title {
+	font-weight: 600;
+	text-transform: none;
+	letter-spacing: 0.02em;
+}
+
+.mod-MetadataInferenceLogModal-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	cursor: pointer;
+	user-select: none;
+	white-space: nowrap;
+}
+
+.mod-MetadataInferenceLogModal-actions {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.mod-MetadataInferenceLogModal-clearBtn,
+.mod-MetadataInferenceLogModal-closeBtn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	cursor: pointer;
+	user-select: none;
+	white-space: nowrap;
+	border-radius: 6px;
+	border: 1px solid transparent;
+	height: 32px;
+	min-height: 32px;
+	padding: 0 10px;
+	transition: $transition-interactive;
+
+	@include font-size(tiny);
+
+	@include themify($themes) {
+		color: themed('metaLog-txt');
+		background-color: rgba(255, 255, 255, 0);
+		border-color: themed('metaLog-border');
+	}
+
+	&:hover {
+		@include themify($themes) {
+			background-color: themed('metaLog-panel-bg');
+		}
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.45;
+	}
+}
+
+.mod-MetadataInferenceLogModal-hint {
+	margin: 0 14px 8px;
+	@include font-size(tiny);
+	@include themify($themes) {
+		color: themed('metaLog-muted');
+	}
+}
+
+.mod-MetadataInferenceLogModal-pre {
+	flex: 1 1 auto;
+	margin: 0;
+	padding: 10px 14px 14px;
+	overflow: auto;
+	min-height: 120px;
+	white-space: pre-wrap;
+	word-break: break-word;
+	font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+	@include font-size(tiny);
+	line-height: 1.45;
+}

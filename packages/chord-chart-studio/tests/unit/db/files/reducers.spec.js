@@ -18,6 +18,7 @@ import { getEditorMode } from '../../../../src/ui/layout/app/_state/selectors';
 import { getSelectedId } from '../../../../src/fileManager/_state/selectors';
 import { UI_LAYOUT_APP_SET_EDITOR_MODE } from '../../../../src/ui/layout/app/_state/actionsTypes';
 import { setEditorMode } from '../../../../src/ui/layout/app/_state/actions';
+import { removeGenre } from '../../../../src/db/catalog/actions';
 
 describe('db/files: reducers', () => {
 	const initialState = deepFreeze(reducers());
@@ -39,6 +40,9 @@ describe('db/files: reducers', () => {
 						id: 'myUUID',
 						title: 'myTitle',
 						content: '',
+						author: '',
+						genreId: null,
+						tagIds: [],
 					},
 				},
 			};
@@ -56,11 +60,17 @@ describe('db/files: reducers', () => {
 						id: 'myUUID1',
 						title: 'myTitle1',
 						content: '',
+						author: '',
+						genreId: null,
+						tagIds: [],
 					},
 					myUUID2: {
 						id: 'myUUID2',
 						title: 'myTitle2',
 						content: '',
+						author: '',
+						genreId: null,
+						tagIds: [],
 					},
 				},
 			};
@@ -87,6 +97,9 @@ describe('db/files: reducers', () => {
 						id: 'myUUID',
 						title: 'myTitle',
 						content: '',
+						author: '',
+						genreId: null,
+						tagIds: [],
 					},
 				},
 			};
@@ -104,11 +117,17 @@ describe('db/files: reducers', () => {
 						id: 'myUUID1',
 						title: 'myTitle1',
 						content: '',
+						author: '',
+						genreId: null,
+						tagIds: [],
 					},
 					myUUID2: {
 						id: 'myUUID2',
 						title: 'myTitle2',
 						content: '',
+						author: '',
+						genreId: null,
+						tagIds: [],
 					},
 				},
 			};
@@ -133,6 +152,9 @@ describe('db/files: reducers', () => {
 						id: 'myUUID',
 						title: 'myNewTitle',
 						content: 'myNewContent',
+						author: '',
+						genreId: null,
+						tagIds: [],
 					},
 				},
 			};
@@ -158,6 +180,9 @@ describe('db/files: reducers', () => {
 						id: 'myUUID',
 						title: 'myNewTitle',
 						content: '',
+						author: '',
+						genreId: null,
+						tagIds: [],
 					},
 				},
 			};
@@ -182,6 +207,9 @@ describe('db/files: reducers', () => {
 						id: 'myUUID',
 						title: 'myTitle',
 						content: 'myNewContent',
+						author: '',
+						genreId: null,
+						tagIds: [],
 					},
 				},
 			};
@@ -206,6 +234,9 @@ describe('db/files: reducers', () => {
 						id: 'myUUID',
 						title: 'myTitle',
 						content: 'myContent',
+						author: '',
+						genreId: null,
+						tagIds: [],
 					},
 				},
 			};
@@ -215,6 +246,9 @@ describe('db/files: reducers', () => {
 						id: 'myUUID',
 						title: 'myTitle',
 						content: '',
+						author: '',
+						genreId: null,
+						tagIds: [],
 					},
 				},
 			};
@@ -329,6 +363,9 @@ describe('db/files: reducers', () => {
 						id: fileId,
 						title: 'myTitle',
 						content: '',
+						author: '',
+						genreId: null,
+						tagIds: [],
 						options: {
 							preferences: {
 								updatedAt: 'now',
@@ -345,6 +382,9 @@ describe('db/files: reducers', () => {
 						id: fileId,
 						title: 'myTitle',
 						content: '',
+						author: '',
+						genreId: null,
+						tagIds: [],
 						options: {
 							preferences: {
 								updatedAt: 'later',
@@ -383,6 +423,9 @@ describe('db/files: reducers', () => {
 						id: fileId,
 						title: 'myTitle',
 						content: '',
+						author: '',
+						genreId: null,
+						tagIds: [],
 						options: {
 							screen: {
 								updatedAt: 'even-later',
@@ -438,6 +481,9 @@ describe('db/files: reducers', () => {
 						id: fileId,
 						title: 'myTitle',
 						content: '',
+						author: '',
+						genreId: null,
+						tagIds: [],
 						options: {
 							preferences: {
 								updatedAt: 'now',
@@ -650,6 +696,55 @@ describe('db/files: reducers', () => {
 
 			expect(result.allFiles[fileId].options.print).not.toBeDefined();
 			expect(result.allFiles[fileId].options.play).not.toBeDefined();
+		});
+	});
+
+	describe('DB_CATALOG_REMOVE_GENRE', () => {
+		test('should clear genreId from files that reference the removed genre', () => {
+			const state = deepFreeze({
+				allFiles: {
+					f1: {
+						id: 'f1',
+						title: 'A',
+						content: '',
+						author: '',
+						genreId: 'g1',
+						tagIds: [],
+					},
+					f2: {
+						id: 'f2',
+						title: 'B',
+						content: '',
+						author: '',
+						genreId: 'g2',
+						tagIds: [],
+					},
+				},
+			});
+
+			const actual = reducers(state, removeGenre('g1'), {});
+
+			expect(actual.allFiles.f1.genreId).toBeNull();
+			expect(actual.allFiles.f2.genreId).toBe('g2');
+		});
+
+		test('should return same state when no file references the genre', () => {
+			const state = deepFreeze({
+				allFiles: {
+					f1: {
+						id: 'f1',
+						title: 'A',
+						content: '',
+						author: '',
+						genreId: null,
+						tagIds: [],
+					},
+				},
+			});
+
+			const actual = reducers(state, removeGenre('gx'), {});
+
+			expect(actual).toBe(state);
 		});
 	});
 });

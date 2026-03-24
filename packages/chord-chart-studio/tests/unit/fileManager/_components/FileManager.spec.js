@@ -1,4 +1,12 @@
 jest.mock('../../../../src/fileManager/exportSelectedFileAsText');
+jest.mock('../../../../src/fileManager/_containers/AiImportModal', () => ({
+	__esModule: true,
+	default: () => null,
+}));
+jest.mock('../../../../src/fileManager/_containers/FileMetadataPanel', () => ({
+	__esModule: true,
+	default: () => null,
+}));
 
 import React from 'react';
 
@@ -26,6 +34,7 @@ describe('FileManager', () => {
 	const updateFile = jest.fn();
 	const startImport = jest.fn();
 	const setEditorMode = jest.fn();
+	const requestBrowserSystemPrint = jest.fn();
 
 	window.getSelection = () => ({
 		removeAllRanges: jest.fn(),
@@ -53,6 +62,7 @@ describe('FileManager', () => {
 			updateFile,
 			startImport,
 			setEditorMode,
+			requestBrowserSystemPrint,
 		};
 
 		selectFile.mockReset();
@@ -62,14 +72,15 @@ describe('FileManager', () => {
 		updateFile.mockReset();
 		startImport.mockReset();
 		setEditorMode.mockReset();
+		requestBrowserSystemPrint.mockReset();
 	});
 
 	describe('Action list', () => {
 		test('should render files titles as value of input fields', () => {
 			const { getByText } = render(<FileManager {...props} />);
-			getByText('New');
-			getByText('Rename');
-			getByText('Delete');
+			getByText('空白');
+			getByText('重命名');
+			getByText('删除');
 		});
 	});
 
@@ -160,7 +171,7 @@ describe('FileManager', () => {
 				<FileManager {...props} selected={props.allTitles[3].id} />
 			);
 
-			const rename = getByText('Rename');
+			const rename = getByText('重命名');
 
 			fireEvent.click(rename);
 
@@ -320,7 +331,7 @@ describe('FileManager', () => {
 	describe('createFile', () => {
 		test('should call createFile() with default title on New Action click', () => {
 			const { getByText } = render(<FileManager {...props} />);
-			const input = getByText('New');
+			const input = getByText('空白');
 
 			fireEvent.click(input);
 
@@ -333,7 +344,7 @@ describe('FileManager', () => {
 			const { getByText } = render(
 				<FileManager {...props} selected={props.allTitles[2].id} />
 			);
-			const input = getByText('Delete');
+			const input = getByText('删除');
 
 			fireEvent.click(input);
 
@@ -351,7 +362,7 @@ describe('FileManager', () => {
 			const { getByText } = render(
 				<FileManager {...props} selected={props.allTitles[2].id} />
 			);
-			const input = getByText('Delete');
+			const input = getByText('删除');
 
 			fireEvent.click(input);
 
@@ -368,7 +379,7 @@ describe('FileManager', () => {
 	describe('import', () => {
 		test('should call startImport() on import action', () => {
 			const { getByText } = render(<FileManager {...props} />);
-			const importButton = getByText('Import');
+			const importButton = getByText('导入');
 
 			fireEvent.click(importButton);
 
@@ -379,7 +390,7 @@ describe('FileManager', () => {
 	describe('export', () => {
 		test('should call setEditorMode() and exportSelectedFileAsText() on export action', async () => {
 			const { getByText } = render(<FileManager {...props} />);
-			const exportButton = getByText('Export');
+			const exportButton = getByText('导出');
 
 			act(() => {
 				fireEvent.click(exportButton);
@@ -394,9 +405,9 @@ describe('FileManager', () => {
 	});
 
 	describe('print', () => {
-		test('should call setEditorMode() and window.print() on print action', async () => {
+		test('should call setEditorMode(print) and requestBrowserSystemPrint on print action', () => {
 			const { getByText } = render(<FileManager {...props} />);
-			const printButton = getByText('Print');
+			const printButton = getByText('打印');
 
 			act(() => {
 				fireEvent.click(printButton);
@@ -404,7 +415,11 @@ describe('FileManager', () => {
 
 			expect(setEditorMode).toHaveBeenCalledTimes(1);
 			expect(setEditorMode).toHaveBeenCalledWith('print');
-			await waitFor(() => expect(window.print).toHaveBeenCalledTimes(1));
+			expect(requestBrowserSystemPrint).toHaveBeenCalledTimes(1);
+			expect(requestBrowserSystemPrint).toHaveBeenCalledWith({
+				pdfDocumentTitle: 'title1+PDF',
+			});
+			expect(window.print).not.toHaveBeenCalled();
 		});
 	});
 
@@ -413,12 +428,12 @@ describe('FileManager', () => {
 			const { getByText } = render(
 				<FileManager {...props} selected={''} />
 			);
-			const importBtn = getByText('Import');
-			const newBtn = getByText('New');
-			const renameBtn = getByText('Rename');
-			const deleteBtn = getByText('Delete');
-			const exportBtn = getByText('Export');
-			const printBtn = getByText('Print');
+			const importBtn = getByText('导入');
+			const newBtn = getByText('空白');
+			const renameBtn = getByText('重命名');
+			const deleteBtn = getByText('删除');
+			const exportBtn = getByText('导出');
+			const printBtn = getByText('打印');
 
 			act(() => {
 				fireEvent.click(importBtn);

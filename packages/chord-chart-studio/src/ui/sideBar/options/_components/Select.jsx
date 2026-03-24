@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SelectChoice from './SelectChoice';
 
 import Icon from '../../../_components/Icon';
+import { useI18n } from '../../../i18n/I18nProvider';
 
 function Select(props) {
 	const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +18,7 @@ function Select(props) {
 		optionValue,
 		setOption,
 	} = props;
+	const { t } = useI18n();
 
 	const classNames = ['sb-optionSelect'];
 	if (!isInteractable) {
@@ -50,12 +52,12 @@ function Select(props) {
 	).label;
 
 	const selectLabel = isOpen ? (
-		label
+		t(label)
 	) : (
 		<span>
-			<span>{label + ': '}</span>
+			<span>{t(label) + ': '}</span>
 			<span className={'sb-optionSelectChoice-activeLabel'}>
-				{activeLabel}
+				{t(activeLabel)}
 			</span>
 		</span>
 	);

@@ -1,5 +1,20 @@
 $themes: (
-	light: (),
+	light: (
+		actions-bg: cv(light-secondary),
+		action-bgHover: cv(light-hover-surface),
+		fileEntry-txt: cv(light-foreground),
+		fileEntry-txtActive: cv(light-secondary),
+		fileEntry-txtRenamed: cv(light-secondary),
+		fileEntry-bgActive: cv(light-accent),
+		fileEntry-bgHover: cv(light-hover-surface),
+		fileEntry-border: cv(light-border-subtle),
+		fileManager-sectionTitle: cv(light-section-label),
+		fileEntry-bgRenamed: cv(light-foreground, light20),
+		aiImportModal-surface: cv(light-secondary),
+		aiImportModal-border: cv(light-foreground, light20),
+		aiImportModal-inputBg: cv(light-background),
+		aiImportModal-muted: cv(light-foreground, light20),
+	),
 	dark: (
 		actions-bg: cv(dark-background, light10),
 		action-bgHover: cv(dark-background, light20),
@@ -8,6 +23,13 @@ $themes: (
 		fileEntry-txtRenamed: cv(dark-background),
 		fileEntry-bgActive: cv(dark-accent),
 		fileEntry-bgHover: cv(dark-background, light20),
+		fileEntry-border: cv(dark-foreground, dark30),
+		fileManager-sectionTitle: cv(dark-foreground, dark20),
 		fileEntry-bgRenamed: cv(dark-foreground),
+		/* AI 导入弹窗：与全局 Modal 卡片一致，勿用 fileEntry-bgRenamed 作整卡底色 */
+			aiImportModal-surface: cv(dark-background, light3),
+		aiImportModal-border: cv(dark-foreground, dark30),
+		aiImportModal-inputBg: cv(dark-background, light10),
+		aiImportModal-muted: cv(dark-foreground, dark20),
 	),
 );

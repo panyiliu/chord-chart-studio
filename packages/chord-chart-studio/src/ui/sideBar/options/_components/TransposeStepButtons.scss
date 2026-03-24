@@ -1,0 +1,89 @@
+@import '../../../../../scss/abstract';
+@import '../_themes.scss';
+
+.sb-optionTransposeStepButtons {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	justify-content: space-between;
+
+	padding: $spacer-tiny $spacer-small-plus $spacer-tiny $spacer-small;
+	transition: $transition-interactive;
+
+	@include themify($themes) {
+		border-bottom: 1px dotted themed('option-border');
+	}
+}
+
+.sb-optionTransposeStepButtons-isNotInteractable {
+	user-select: none;
+
+	@include themify($themes) {
+		opacity: 0.65;
+	}
+}
+
+.sb-optionTransposeStepButtons-btn {
+	flex: 1 1 0;
+	min-width: 0;
+
+	// Minimal button to match other sidebar options.
+	border-radius: 6px;
+	border: 1px solid transparent;
+	background: transparent;
+	padding: 4px 6px;
+
+	@include font-size(small);
+	font: inherit;
+
+	@include themify($themes) {
+		color: themed('option-border');
+	}
+
+	cursor: pointer;
+	transition: $transition-interactive;
+
+	&:hover:not(:disabled) {
+		@include themify($themes) {
+			background-color: themed('option-bgHover');
+			border-color: themed('option-border');
+		}
+	}
+
+	&:focus-visible {
+		@include themify($themes) {
+			outline: 2px solid themed('option-border');
+		}
+		outline-offset: 2px;
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.45;
+		@include themify($themes) {
+			color: themed('option-isDisabled');
+		}
+	}
+}
+
+.sb-optionTransposeStepButtons-btn--reset {
+	@include themify($themes) {
+		background-color: themed('optionsGroup-bgHover');
+		border-color: themed('option-border');
+	}
+
+	&:hover:not(:disabled) {
+		@include themify($themes) {
+			filter: brightness(1.02);
+		}
+	}
+}
+
+.sb-optionTransposeStepButtons-btn--down,
+.sb-optionTransposeStepButtons-btn--up {
+	&:hover:not(:disabled) {
+		@include themify($themes) {
+			background-color: themed('option-bgHover');
+		}
+	}
+}

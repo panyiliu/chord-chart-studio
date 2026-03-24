@@ -1,8 +1,14 @@
 $themes: (
 	light: (
-		// for testing purposes
-		range-thumb: cv(dark-accent, dark20),
-		range-track: cv(dark-accent, light30),
+		optionsGroup-bgHover: cv(light-primary),
+		optionsGroup-border: cv(light-foreground, light20),
+		optionsGroup-option-bg: cv(light-secondary),
+		option-isDisabled: cv(light-foreground, light20),
+		option-bgHover: cv(light-primary),
+		option-border: cv(light-foreground, light20),
+		toggle-icon-isOff: cv(light-foreground, light20),
+		range-thumb: cv(light-accent),
+		range-track: cv(light-foreground, light20),
 	),
 	dark: (
 		optionsGroup-bgHover: cv(dark-background, light20),

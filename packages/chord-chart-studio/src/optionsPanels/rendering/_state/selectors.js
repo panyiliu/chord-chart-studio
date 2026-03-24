@@ -56,6 +56,10 @@ export const getHiddenWidgets = (state) => {
 
 	const editorMode = getEditorMode(state);
 
+	if (editorMode !== 'print') {
+		hiddenWidgets.push('printPdfChordSection');
+	}
+
 	const nonInteractableOptions = _difference(
 		allOptions,
 		editorModeOptions[editorMode]

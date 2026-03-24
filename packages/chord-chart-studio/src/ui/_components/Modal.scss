@@ -1,11 +1,17 @@
 @import '../../../scss/abstract';
 
 $themes: (
-	light: (),
+	light: (
+		modal-bg: cv(light-secondary),
+		modal-border: cv(light-foreground, light20),
+		modal-txt: cv(light-foreground),
+		modal-muted: cv(light-foreground, light20),
+	),
 	dark: (
-		modal-bg: cv(dark-secondary, dark5),
-		modal-border: cv(dark-foreground, dark20),
+		modal-bg: cv(dark-background, light3),
+		modal-border: cv(dark-foreground, dark30),
 		modal-txt: cv(dark-foreground),
+		modal-muted: cv(dark-foreground, dark20),
 	),
 );
 
@@ -13,22 +19,35 @@ $themes: (
 	z-index: $zindex-modal;
 	height: 100%;
 	width: 100%;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
+	pointer-events: auto;
 }
 
 .mod-Overlay {
+	z-index: 1;
 	height: 100%;
 	width: 100%;
 	position: absolute;
 	top: 0;
 	left: 0;
-	opacity: 0.7;
-	background-color: black;
+	opacity: 1;
+	background-color: rgba(0, 0, 0, 0.55);
+	backdrop-filter: blur(10px);
+	transition: opacity $transition-base, background-color $transition-base;
 }
 
 .mod-ContentContainer {
+	position: relative;
+	z-index: 2;
+	pointer-events: auto;
+	min-height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: $spacer-small;
+	box-sizing: border-box;
 }
 
 .mod-ModalConfirmContainer {
@@ -41,15 +60,46 @@ $themes: (
 	width: auto;
 	height: auto;
 
-	padding: 10px 20px;
+	padding: 16px 20px;
+	border-radius: 10px;
 
 	@include themify($themes) {
 		background-color: themed('modal-bg');
 		border: 1px solid themed('modal-border');
 		color: themed('modal-txt');
+		box-shadow:
+			0 12px 40px rgba(0, 0, 0, 0.5),
+			0 0 0 1px rgba(255, 255, 255, 0.04);
 	}
 }
 
 .mod-ModalConfirmButtons {
 	text-align: center;
+}
+
+.mod-ModalSettingsWide.mod-ModalConfirmContainer {
+	max-width: min(92vw, 520px);
+	max-height: 85vh;
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: min(92vw, 520px);
+	text-align: left;
+}
+
+.mod-ModalSettingsTitle {
+	margin: 0 0 $spacer-tiny;
+	font-weight: bold;
+	text-transform: capitalize;
+	@include themify($themes) {
+		color: themed('modal-txt');
+	}
+}
+
+.mod-ModalSettingsHint {
+	margin: 0 0 $spacer-small;
+	@include font-size(small);
+	line-height: 1.45;
+	@include themify($themes) {
+		color: themed('modal-muted');
+	}
 }

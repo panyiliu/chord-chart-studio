@@ -4,10 +4,13 @@ export default {
 		values: {
 			theme: 'dark1',
 			chartFormat: 'chordmark',
+			/** @type {'system' | 'light' | 'dark'} */
+			uiColorScheme: 'system',
 		},
 		defaults: {
 			theme: 'dark1',
 			chartFormat: 'chordmark',
+			uiColorScheme: 'system',
 		},
 		//userDefaults: {},
 	},
@@ -40,6 +43,11 @@ export default {
 			columnsCount: 1,
 			columnBreakOnSection: true,
 			documentMargins: 3,
+
+			printChordColor: 'blue',
+			printChordSizePercent: 115,
+			printChordBold: true,
+			printChordShadowStrength: 0,
 		},
 		defaults: {
 			chartType: 'all',
@@ -52,6 +60,11 @@ export default {
 			columnsCount: 1,
 			columnBreakOnSection: true,
 			documentMargins: 3,
+
+			printChordColor: 'blue',
+			printChordSizePercent: 115,
+			printChordBold: true,
+			printChordShadowStrength: 0,
 		},
 		//userDefaults: {},
 	},

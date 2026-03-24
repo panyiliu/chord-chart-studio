@@ -2,8 +2,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 
 export const getOptionValue = (state, context, key) => {
 	if (
-		!state.db.options[context] ||
-		!state.db.options[context].values ||
+		!state?.db?.options?.[context]?.values ||
 		typeof state.db.options[context].values[key] === 'undefined'
 	) {
 		return;
@@ -12,14 +11,14 @@ export const getOptionValue = (state, context, key) => {
 };
 
 export const getAllOptionValues = (state, context) => {
-	if (!state.db.options[context] || !state.db.options[context].values) {
+	if (!state?.db?.options?.[context]?.values) {
 		return;
 	}
 	return _cloneDeep(state.db.options[context].values);
 };
 
 export const getOptionsDefaults = (state, context) => {
-	if (!state.db.options[context] || !state.db.options[context].defaults) {
+	if (!state?.db?.options?.[context]?.defaults) {
 		return;
 	}
 	return _cloneDeep(state.db.options[context].defaults);

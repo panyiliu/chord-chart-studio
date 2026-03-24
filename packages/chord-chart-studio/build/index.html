@@ -20,13 +20,13 @@
 			rel="stylesheet"
 		/>
 		<link
-			href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..700;1,300..700&display=swap"
 			rel="stylesheet"
 		/>
-		<link rel="icon" href="/app/favicon.ico" sizes="32x32" />
-		<link rel="icon" href="/app/icon.svg" type="image/svg+xml" />
-		<link rel="apple-touch-icon" href="/app/apple-touch-icon.png" />
-		<link rel="manifest" href="/app/manifest.json" />
+		<link rel="icon" href="/favicon.ico" sizes="32x32" />
+		<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="manifest" href="/manifest.json" />
 
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script
@@ -42,12 +42,49 @@
 
 			gtag('config', 'G-EGKBT2J600');
 		</script>
-		<script type="module" crossorigin src="/app/assets/index-DXmZRdo-.js"></script>
-		<link rel="modulepreload" crossorigin href="/app/assets/vendor-3z0Gt4wU.js">
-		<link rel="stylesheet" crossorigin href="/app/assets/vendor-BHpWJQ6D.css">
-		<link rel="stylesheet" crossorigin href="/app/assets/index-s8b48HYU.css">
-	<script id="vite-plugin-pwa:register-sw" src="/app/registerSW.js"></script></head>
+		<script type="module" crossorigin src="/assets/index-BYnLl6l5.js"></script>
+		<link rel="modulepreload" crossorigin href="/assets/vendor-MvJaTvZc.js">
+		<link rel="modulepreload" crossorigin href="/assets/pdf-export-S8nEeiT5.js">
+		<link rel="stylesheet" crossorigin href="/assets/vendor-BHpWJQ6D.css">
+		<link rel="stylesheet" crossorigin href="/assets/index-BcgSLSDy.css">
+	<script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
 	<body>
-		<div id="app" class="theme-dark"></div>
+		<div id="app"></div>
+		<script>
+			(function () {
+				var el = document.getElementById('app');
+				if (!el) return;
+				var t = 'theme-dark';
+				try {
+					var raw = localStorage.getItem('state');
+					if (!raw) {
+						if (
+							window.matchMedia &&
+							window.matchMedia('(prefers-color-scheme: light)').matches
+						) {
+							t = 'theme-light';
+						}
+					} else {
+						var p = JSON.parse(raw);
+						var v =
+							p &&
+							p.db &&
+							p.db.options &&
+							p.db.options.editorPreferences &&
+							p.db.options.editorPreferences.values &&
+							p.db.options.editorPreferences.values.uiColorScheme;
+						if (v === 'light') t = 'theme-light';
+						else if (v === 'dark') t = 'theme-dark';
+						else if (
+							v === 'system' &&
+							window.matchMedia &&
+							window.matchMedia('(prefers-color-scheme: light)').matches
+						)
+							t = 'theme-light';
+					}
+				} catch (e) {}
+				el.classList.add(t);
+			})();
+		</script>
 	</body>
 </html>

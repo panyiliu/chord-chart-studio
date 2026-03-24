@@ -8,7 +8,13 @@ jest.mock(
 import _ from 'lodash';
 import React from 'react';
 
-import { render, cleanup, act } from '@testing-library/react';
+import {
+	render,
+	cleanup,
+	act,
+	waitFor,
+	fireEvent,
+} from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import '@testing-library/jest-dom';
@@ -16,6 +22,7 @@ import '@testing-library/jest-dom';
 import PrintPreview from '../../../../../src/songRenderers/printPreview/_components/PrintPreview';
 import getAllLinesHeight from '../../../../../src/songRenderers/printPreview/helpers/getAllLinesHeight';
 import getPagesHeight from '../../../../../src/songRenderers/printPreview/helpers/getPagesHeight';
+import * as runPrintTitle from '../../../../../src/fileManager/runBrowserPrintWithPdfTitle';
 
 afterEach(cleanup);
 
@@ -116,6 +123,44 @@ describe('PrintPreview', () => {
 			expect(
 				allPages[1].querySelector('.printPreview-pageHeader')
 			).toBeNull();
+		});
+	});
+
+	describe('Browser system print', () => {
+		test('enables control when pages exist and runs print helper on click', async () => {
+			const clearPending = jest.fn();
+			const spy = jest
+				.spyOn(runPrintTitle, 'runBrowserPrintWithPdfTitle')
+				.mockImplementation(() => {});
+
+			let result = {};
+
+			await act(async () => {
+				result = render(
+					<PrintPreview
+						{...props}
+						clearBrowserSystemPrint={clearPending}
+						pendingBrowserSystemPrint={{
+							pdfDocumentTitle: 'myTitle+PDF',
+						}}
+					/>
+				);
+			});
+
+			await waitFor(() => {
+				expect(
+					result.getByTestId('printPreview-systemPrint')
+				).not.toBeDisabled();
+			});
+
+			fireEvent.click(result.getByTestId('printPreview-systemPrint'));
+
+			expect(spy).toHaveBeenCalledWith({
+				pdfDocumentTitle: 'myTitle+PDF',
+			});
+			expect(clearPending).toHaveBeenCalledTimes(1);
+
+			spy.mockRestore();
 		});
 	});
 

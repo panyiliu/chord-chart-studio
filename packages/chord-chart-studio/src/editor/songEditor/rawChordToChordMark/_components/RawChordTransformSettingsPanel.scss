@@ -1,0 +1,306 @@
+@import '../../../../../scss/abstract';
+
+$rtcThemes: (
+	light: (),
+	dark: (
+		rtc-section-bg: cv(dark-secondary, dark5),
+		rtc-section-border: cv(dark-foreground, dark30),
+		rtc-badge-bg: cv(dark-accent, dark20),
+		rtc-badge-txt: cv(dark-foreground),
+		rtc-muted: cv(dark-foreground, light20),
+	),
+);
+
+.rawChordTransformSettingsPanel {
+	&-tabs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin: 0 0 $spacer-small;
+		padding: 6px;
+		border-radius: 10px;
+		@include themify($rtcThemes) {
+			background-color: themed('rtc-section-bg');
+			border: 1px solid themed('rtc-section-border');
+		}
+	}
+
+	&-tab {
+		border: 1px solid transparent;
+		border-radius: 999px;
+		padding: 6px 12px;
+		cursor: pointer;
+		font-weight: 700;
+		@include font-size(tiny);
+		@include themify($rtcThemes) {
+			background-color: themed('rtc-section-bg');
+			border-color: themed('rtc-section-border');
+			color: themed('rtc-muted');
+		}
+	}
+
+	&-tab--active {
+		@include themify($rtcThemes) {
+			color: themed('rtc-badge-txt');
+			background-color: themed('rtc-badge-bg');
+			border-color: themed('rtc-badge-bg');
+			box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.22);
+		}
+	}
+
+	&-intro {
+		margin: 0 0 $spacer-small;
+		line-height: 1.55;
+		@include font-size(small);
+		opacity: 0.92;
+	}
+
+	&-sections {
+		display: flex;
+		flex-direction: column;
+		gap: $spacer-small;
+	}
+
+	&-section {
+		margin: 0;
+		padding: $spacer-small $spacer-small-plus;
+		border-radius: 8px;
+		border: 1px solid transparent;
+		box-sizing: border-box;
+
+		@include themify($rtcThemes) {
+			background-color: themed('rtc-section-bg');
+			border-color: themed('rtc-section-border');
+		}
+	}
+
+	&-sectionHeader {
+		display: flex;
+		align-items: flex-start;
+		gap: 0;
+		margin-bottom: $spacer-tiny;
+	}
+
+	&-sectionTitles {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	&-sectionTitle {
+		margin: 0 0 2px;
+		font-weight: 600;
+		line-height: 1.35;
+		text-transform: none;
+		letter-spacing: 0.02em;
+		@include font-size(small);
+	}
+
+	&-sectionLead {
+		margin: 0;
+		line-height: 1.45;
+		@include font-size(tiny);
+
+		@include themify($rtcThemes) {
+			color: themed('rtc-muted');
+		}
+	}
+
+	&-field {
+		margin-top: $spacer-tiny;
+	}
+
+	&-fieldLabel {
+		display: block;
+		margin-bottom: 4px;
+		font-weight: 500;
+		@include font-size(tiny);
+	}
+
+	&-fieldHint {
+		margin: 6px 0 0;
+		line-height: 1.45;
+		@include font-size(tiny);
+		opacity: 0.88;
+
+		code {
+			font-size: 0.95em;
+			padding: 0 3px;
+			border-radius: 3px;
+			@include themify($rtcThemes) {
+				background-color: rgba(255, 255, 255, 0.06);
+			}
+		}
+	}
+
+	&-artistPrefix {
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+	}
+
+	&-toolbarRow {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 8px 16px;
+		margin-bottom: $spacer-tiny;
+	}
+
+	&-toolbarRow .promptTemplatesPanel-label {
+		margin: 0;
+		flex: 0 0 auto;
+	}
+
+	&-toolbarRow .promptTemplatesPanel-input {
+		flex: 0 1 280px;
+		min-width: 160px;
+		margin: 0;
+	}
+
+	&-block {
+		margin-bottom: 0;
+	}
+
+	&-blockTitle {
+		margin: 0 0 6px;
+		font-weight: 600;
+		@include font-size(small);
+	}
+
+	&-gridHead,
+	&-gridRow {
+		display: grid;
+		grid-template-columns: 1fr 120px auto;
+		gap: 6px;
+		align-items: center;
+	}
+
+	&-gridHead {
+		opacity: 0.78;
+		margin-bottom: 4px;
+		@include font-size(tiny);
+	}
+
+	&-gridRow {
+		margin-bottom: 4px;
+	}
+
+	&-gridRow--keywords {
+		grid-template-columns: minmax(0, 1fr) 150px 150px auto;
+		align-items: start;
+	}
+
+	&-gridRow .promptTemplatesPanel-input {
+		margin-bottom: 0;
+	}
+
+	&-keyword {
+		resize: vertical;
+		min-height: 2.6em;
+		line-height: 1.35;
+		font-family: inherit;
+	}
+
+	&-addBtn {
+		margin-top: 4px;
+	}
+
+	&-json {
+		width: 100%;
+		box-sizing: border-box;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			'Liberation Mono', 'Courier New', monospace;
+	}
+
+	&-editBox {
+		margin: 8px 0 10px;
+		padding: 10px;
+		border-radius: 8px;
+		border: 1px solid transparent;
+		@include themify($rtcThemes) {
+			background-color: themed('rtc-section-bg');
+			border-color: themed('rtc-section-border');
+		}
+	}
+
+	&-templateList {
+		display: grid;
+		gap: 6px;
+		margin-bottom: 8px;
+	}
+
+	&-templateRowWrap {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: 8px;
+		align-items: center;
+	}
+
+	&-templateRow {
+		display: grid;
+		grid-template-columns: 20px minmax(0, 1fr);
+		align-items: center;
+		gap: 8px;
+		width: 100%;
+		text-align: left;
+		padding: 8px 10px;
+		border-radius: 8px;
+		border: 1px solid transparent;
+		cursor: pointer;
+		@include themify($rtcThemes) {
+			background-color: themed('rtc-section-bg');
+			border-color: themed('rtc-section-border');
+		}
+	}
+
+	&-templateCheck {
+		width: 18px;
+		height: 18px;
+		border-radius: 999px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: 700;
+		@include font-size(tiny);
+		@include themify($rtcThemes) {
+			background-color: themed('rtc-badge-bg');
+			color: themed('rtc-badge-txt');
+		}
+	}
+
+	&-templateName {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	&-templateActions {
+		display: inline-flex;
+		gap: 6px;
+	}
+
+	&-actionsAligned {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		flex-wrap: wrap;
+	}
+
+	&-jsonError {
+		margin: 6px 0 0;
+		color: #dc2626;
+		@include font-size(tiny);
+	}
+
+	&-savedTip {
+		margin: $spacer-small 0 0;
+		padding-top: $spacer-tiny;
+		opacity: 0.78;
+		@include font-size(tiny);
+		border-top: 1px solid transparent;
+
+		@include themify($rtcThemes) {
+			border-top-color: themed('rtc-section-border');
+		}
+	}
+}

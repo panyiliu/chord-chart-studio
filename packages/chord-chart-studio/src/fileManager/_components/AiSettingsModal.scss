@@ -1,0 +1,641 @@
+@import '../../../scss/abstract';
+
+/* 弹窗内表单：与右侧栏解耦，使用更高对比度的前景/底/边 */
+$aiSettingsFormThemes: (
+	light: (
+		form-txt: cv(light-foreground),
+		form-muted: cv(light-foreground, light20),
+		form-field-bg: cv(light-background),
+		form-field-border: cv(light-foreground, light20),
+		form-divider: cv(light-foreground, light20),
+		form-test-bg: cv(light-secondary),
+		form-section-bg: cv(light-primary),
+	),
+	dark: (
+		form-txt: cv(dark-foreground),
+		form-muted: cv(dark-foreground, dark20),
+		form-field-bg: cv(dark-background, light10),
+		form-field-border: cv(dark-foreground, dark30),
+		form-divider: cv(dark-foreground, dark20),
+		form-test-bg: cv(dark-background),
+		form-section-bg: cv(dark-secondary, dark5),
+	),
+);
+
+.aiSettingsModal.mod-ModalSettingsWide.aiSettingsModal--wide {
+	max-width: min(94vw, 780px) !important;
+	width: min(94vw, 780px) !important;
+	max-height: 90vh;
+	height: min(90vh, 820px);
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+	padding: $spacer-small $spacer-small-plus $spacer-tiny !important;
+	box-sizing: border-box;
+
+	/* Unified typography scale for settings modal. */
+	--settings-fs-l1: 1.25rem;
+	--settings-fs-l2: 1.0625rem;
+	--settings-fs-l3: 0.9375rem;
+	--settings-fs-body: 0.875rem;
+	--settings-fs-label: 0.8125rem;
+	--settings-fs-meta: 0.75rem;
+	--settings-lh-tight: 1.3;
+	--settings-lh-body: 1.6;
+	--settings-w-title: 700;
+	--settings-w-subtitle: 650;
+	--settings-w-label: 600;
+	--settings-w-body: 400;
+}
+
+.aiSettingsModal-header {
+	flex-shrink: 0;
+	margin-bottom: $spacer-tiny;
+}
+
+.aiSettingsModal-title {
+	margin-bottom: $spacer-tiny !important;
+	font-weight: var(--settings-w-title);
+	letter-spacing: -0.02em;
+	line-height: 1.22;
+	font-size: var(--settings-fs-l1);
+}
+
+.aiSettingsModal-lead {
+	margin: 0 0 $spacer-small;
+	line-height: var(--settings-lh-body);
+	font-size: var(--settings-fs-body);
+	font-weight: var(--settings-w-body);
+
+	@include themify($aiSettingsFormThemes) {
+		color: themed('form-muted') !important;
+	}
+}
+
+.aiSettingsModal-mainTabs {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: $spacer-small;
+	padding-bottom: $spacer-tiny;
+	border-bottom: 1px solid transparent;
+
+	@include themify($aiSettingsFormThemes) {
+		border-bottom-color: themed('form-divider');
+	}
+}
+
+.aiSettingsModal-mainTab {
+	margin: 0;
+	padding: 10px 18px;
+	cursor: pointer;
+	border-radius: 8px;
+	border: 1px solid transparent;
+	font-weight: var(--settings-w-label);
+	letter-spacing: 0.02em;
+	font-size: var(--settings-fs-l3);
+	line-height: 1.3;
+	transition: $transition-interactive;
+
+	@include themify($aiSettingsFormThemes) {
+		color: themed('form-muted');
+		background-color: themed('form-test-bg');
+		border-color: themed('form-field-border');
+		box-shadow: 0 3px 10px rgba(2, 6, 23, 0.08);
+	}
+
+	&:hover {
+		@include themify($aiSettingsFormThemes) {
+			color: themed('form-txt');
+			border-color: cv(dark-accent, light20);
+		}
+	}
+
+	&--active {
+		@include themify($aiSettingsFormThemes) {
+			// 使用跟随主题的前景色，避免浅色主题下激活态文字偏浅不可读
+			color: themed('form-txt');
+			background-color: themed('form-field-bg');
+			border-color: cv(dark-accent, light20);
+			box-shadow:
+				0 0 0 2px rgba(124, 58, 237, 0.18),
+				0 10px 24px rgba(2, 6, 23, 0.12);
+		}
+	}
+
+	&:focus-visible {
+		outline: 2px solid cv(dark-accent);
+		outline-offset: 2px;
+	}
+}
+
+.aiSettingsModal-subTabs {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 4px;
+	margin-bottom: $spacer-small;
+}
+
+.aiSettingsModal-subTab {
+	margin: 0;
+	padding: 8px 14px;
+	cursor: pointer;
+	border-radius: 6px;
+	border: 1px solid transparent;
+	font-size: var(--settings-fs-label);
+	font-weight: var(--settings-w-label);
+	line-height: 1.3;
+	transition: $transition-interactive;
+
+	@include themify($aiSettingsFormThemes) {
+		color: themed('form-muted');
+		background-color: transparent;
+		border-color: themed('form-field-border');
+	}
+
+	&:hover {
+		@include themify($aiSettingsFormThemes) {
+			color: themed('form-txt');
+		}
+	}
+
+	&--active {
+		@include themify($aiSettingsFormThemes) {
+			color: themed('form-txt');
+			background-color: themed('form-test-bg');
+			border-color: cv(dark-accent, light20);
+		}
+	}
+
+	&:focus-visible {
+		outline: 2px solid cv(dark-accent);
+		outline-offset: 2px;
+	}
+}
+
+.aiSettingsModal-subPanel {
+	min-height: 120px;
+}
+
+.settingsPromptsTab-global {
+	margin-top: $spacer-medium;
+	padding-top: $spacer-small;
+	border-top: 1px dashed transparent;
+
+	@include themify($aiSettingsFormThemes) {
+		border-top-color: themed('form-divider');
+	}
+}
+
+.settingsPromptsTab-globalTitle {
+	margin: 0 0 6px;
+	font-weight: var(--settings-w-subtitle);
+	font-size: var(--settings-fs-l3);
+	line-height: var(--settings-lh-tight);
+
+	@include themify($aiSettingsFormThemes) {
+		color: themed('form-txt') !important;
+	}
+}
+
+.settingsPromptsTab-globalHint {
+	margin: 0 0 $spacer-small;
+	line-height: var(--settings-lh-body);
+	font-size: var(--settings-fs-body);
+
+	@include themify($aiSettingsFormThemes) {
+		color: themed('form-muted') !important;
+	}
+}
+
+.aiSettingsModal-scroll {
+	flex: 1 1 auto;
+	min-height: 0;
+	min-width: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding-right: 4px;
+	margin-right: -2px;
+}
+
+.aiSettingsModal-section {
+	margin-bottom: $spacer-medium;
+
+	&--last {
+		margin-bottom: 0;
+	}
+}
+
+.aiSettingsModal-sectionHead {
+	margin-bottom: $spacer-small;
+}
+
+.aiSettingsModal-sectionTitle {
+	margin: 0 0 6px;
+	font-weight: var(--settings-w-subtitle);
+	letter-spacing: -0.015em;
+	font-size: var(--settings-fs-l2);
+	line-height: var(--settings-lh-tight);
+
+	@include themify($aiSettingsFormThemes) {
+		color: themed('form-txt') !important;
+	}
+}
+
+.aiSettingsModal-sectionDesc {
+	margin: 0;
+	line-height: var(--settings-lh-body);
+	font-size: var(--settings-fs-body);
+	font-weight: var(--settings-w-body);
+
+	@include themify($aiSettingsFormThemes) {
+		color: themed('form-muted') !important;
+	}
+}
+
+.aiSettingsModal-helpDot {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 18px;
+	height: 18px;
+	margin-left: 6px;
+	border-radius: 50%;
+	cursor: help;
+	font-weight: $weight-bold;
+	@include font-size(tiny);
+	@include themify($aiSettingsFormThemes) {
+		color: themed('form-muted');
+		border: 1px solid themed('form-field-border');
+		background-color: transparent;
+	}
+}
+
+.aiSettingsModal-panel {
+	border-radius: 10px;
+	padding: $spacer-small;
+	box-sizing: border-box;
+
+	@include themify($aiSettingsFormThemes) {
+		background-color: themed('form-section-bg');
+		border: 1px solid themed('form-field-border');
+	}
+
+	&--flush {
+		padding-top: $spacer-tiny;
+	}
+
+	/* keep visual height stable when switching tabs */
+	min-height: 380px;
+}
+
+.aiSettingsModal-body {
+	/* Typography hierarchy: L1 title / L2 section / L3 panel title / body. */
+	.promptTemplatesPanel-title,
+	.aiEnginesPanel-title,
+	.backupSettingsActionGroupTitle,
+	.rawChordTransformSettingsPanel .promptTemplatesPanel-title,
+	.settingsPromptsTab-globalTitle {
+		font-size: var(--settings-fs-l3) !important;
+		line-height: var(--settings-lh-tight) !important;
+		font-weight: var(--settings-w-subtitle) !important;
+		letter-spacing: 0.01em;
+	}
+
+	.promptTemplatesPanel-hint,
+	.promptTemplatesPanel-lead,
+	.aiEnginesPanel-hint,
+	.aiEnginesPanel-fieldHint,
+	.settingsPromptsTab-globalHint,
+	.backupSettingsPanel,
+	.metadataInferenceSettings-hint {
+		font-size: var(--settings-fs-body) !important;
+		line-height: var(--settings-lh-body) !important;
+		font-weight: var(--settings-w-body) !important;
+	}
+
+	.promptTemplatesPanel-label,
+	.aiEnginesPanel-label,
+	.metadataInferenceSettings-label,
+	.backupSettingsForm label {
+		font-size: var(--settings-fs-label) !important;
+		line-height: 1.45 !important;
+		font-weight: var(--settings-w-label) !important;
+	}
+
+	/* Body text and meta text must never exceed title level. */
+	.promptTemplatesPanel-details,
+	.promptTemplatesPanel-detailsBody,
+	.promptTemplatesPanel-radioRow,
+	.aiEnginesPanel-engineMeta,
+	.aiEnginesPanel-testLine,
+	.aiEnginesPanel-testDetails,
+	.aiEnginesPanel-debugPre,
+	.featureEnginesAndTemplatesPanel-rowLabelSub,
+	.metadataInferenceSettings-note,
+	.metadataInferenceSettings-keysTitle,
+	.backupSettingsMeta,
+	.backupSettingsError {
+		font-size: var(--settings-fs-meta) !important;
+		line-height: 1.55 !important;
+	}
+
+	.featureEnginesAndTemplatesPanel-rowLabelMain,
+	.rawChordTransformSettingsPanel-sectionTitle,
+	.rawChordTransformSettingsPanel-blockTitle,
+	.backupSettingsApiHelpTitle {
+		font-size: var(--settings-fs-label) !important;
+		line-height: var(--settings-lh-tight) !important;
+		font-weight: var(--settings-w-label) !important;
+	}
+
+	.featureEnginesAndTemplatesPanel-rowLabel,
+	.featureEnginesAndTemplatesPanel-metadataFoldSummary,
+	.aiEnginesPanel-formTitle,
+	.backupSettingsToggle span,
+	.backupSettingsConfigFold summary,
+	.backupSettingsApiHelp summary {
+		font-size: var(--settings-fs-l3) !important;
+		line-height: var(--settings-lh-tight) !important;
+		font-weight: var(--settings-w-subtitle) !important;
+	}
+
+	@include themify($aiSettingsFormThemes) {
+		/* 提示词模板 */
+		.promptTemplatesPanel {
+			border-bottom-color: themed('form-divider') !important;
+		}
+
+		.promptTemplatesPanel-title,
+		.promptTemplatesPanel-lead,
+		.promptTemplatesPanel-hint,
+		.promptTemplatesPanel-label,
+		.promptTemplatesPanel-radioRow,
+		.promptTemplatesPanel-details,
+		.promptTemplatesPanel-detailsBody,
+		.promptTemplatesPanel-sidebarHead,
+		.promptTemplatesPanel-editorStickyLabel,
+		.promptTemplatesPanel-editorStickyName {
+			color: themed('form-txt') !important;
+		}
+
+		.promptTemplatesPanel-lead {
+			opacity: 0.95;
+		}
+
+		.promptTemplatesPanel-details {
+			background-color: themed('form-section-bg') !important;
+			border-color: themed('form-field-border') !important;
+		}
+
+		.promptTemplatesPanel-detailsBody code {
+			background-color: themed('form-field-bg') !important;
+		}
+
+		.promptTemplatesPanel-sidebar {
+			background-color: themed('form-section-bg') !important;
+			border-color: themed('form-field-border') !important;
+		}
+
+		.promptTemplatesPanel-sidebarFoot {
+			border-top-color: themed('form-field-border') !important;
+		}
+
+		.promptTemplatesPanel-pill {
+			color: themed('form-txt') !important;
+		}
+
+		.promptTemplatesPanel-pill:hover {
+			background-color: themed('form-field-bg') !important;
+			border-color: themed('form-field-border') !important;
+		}
+
+		.promptTemplatesPanel-pillActive {
+			background-color: themed('form-field-bg') !important;
+			border-color: themed('form-field-border') !important;
+			box-shadow: inset 0 0 0 1px themed('form-field-border') !important;
+		}
+
+		.promptTemplatesPanel-badge {
+			background-color: themed('form-test-bg') !important;
+			border-color: themed('form-field-border') !important;
+			color: themed('form-muted') !important;
+		}
+
+		.promptTemplatesPanel-editorSticky {
+			background-color: themed('form-section-bg') !important;
+			border-color: themed('form-field-border') !important;
+			box-shadow: 0 1px 0 themed('form-divider') !important;
+		}
+
+		.featureEnginesAndTemplatesPanel-rowLabelSub {
+			color: themed('form-muted') !important;
+		}
+
+		.promptTemplatesPanel-hint {
+			opacity: 1;
+		}
+
+		.promptTemplatesPanel-input,
+		.promptTemplatesPanel-textarea {
+			color: themed('form-txt') !important;
+			background-color: themed('form-field-bg') !important;
+			border: 1px solid themed('form-field-border') !important;
+		}
+
+		.promptTemplatesPanel-btn {
+			color: themed('form-txt') !important;
+			background-color: themed('form-field-bg') !important;
+			border: 1px solid themed('form-field-border') !important;
+			font-size: 0.875rem !important;
+			font-weight: 600 !important;
+			letter-spacing: 0.02em;
+			padding: 8px 14px !important;
+			border-radius: 7px !important;
+		}
+
+		.promptTemplatesPanel-btn:hover {
+			filter: brightness(1.08);
+		}
+
+		.promptTemplatesPanel-btnPrimary {
+			font-size: 0.875rem !important;
+			font-weight: 600 !important;
+			letter-spacing: 0.02em;
+			padding: 8px 16px !important;
+			border-radius: 7px !important;
+		}
+
+		.promptTemplatesPanel-hint code {
+			background-color: themed('form-field-bg') !important;
+		}
+
+		.aiPromptsEditor {
+			border-bottom-color: themed('form-divider') !important;
+		}
+
+		.aiPromptsEditor-title,
+		.aiPromptsEditor-label {
+			color: themed('form-txt') !important;
+		}
+
+		.aiPromptsEditor-textarea {
+			color: themed('form-txt') !important;
+			background-color: themed('form-field-bg') !important;
+			border: 1px solid themed('form-field-border') !important;
+		}
+
+		/* 元数据识别 */
+		.metadataInferenceSettings-label,
+		.metadataInferenceSettings-keysTitle,
+		.metadataInferenceSettings-keysCode {
+			color: themed('form-txt') !important;
+		}
+
+		.metadataInferenceSettings-keys {
+			border-color: themed('form-field-border') !important;
+			background-color: themed('form-field-bg') !important;
+		}
+
+		/* 引擎区 */
+		.aiEnginesPanel {
+			border-bottom-color: themed('form-divider') !important;
+		}
+
+		.aiEnginesPanel-title,
+		.aiEnginesPanel-hint,
+		.aiEnginesPanel-empty,
+		.aiEnginesPanel-label {
+			color: themed('form-txt') !important;
+		}
+
+		.aiEnginesPanel-hint,
+		.aiEnginesPanel-fieldHint,
+		.aiEnginesPanel-empty {
+			opacity: 1;
+		}
+
+		.aiEnginesPanel-fieldHint {
+			color: themed('form-muted') !important;
+		}
+
+		.aiEnginesPanel-radioLabel {
+			color: themed('form-txt') !important;
+		}
+
+		.aiEnginesPanel-engineMeta {
+			opacity: 0.88;
+			color: themed('form-muted') !important;
+		}
+
+		.aiEnginesPanel-input {
+			color: themed('form-txt') !important;
+			background-color: themed('form-field-bg') !important;
+			border: 1px solid themed('form-field-border') !important;
+		}
+
+		.aiEnginesPanel-test,
+		.aiEnginesPanel-edit,
+		.aiEnginesPanel-submit {
+			color: themed('form-txt') !important;
+			background-color: themed('form-field-bg') !important;
+			border: 1px solid themed('form-field-border') !important;
+		}
+
+		.aiEnginesPanel-test:hover,
+		.aiEnginesPanel-edit:hover,
+		.aiEnginesPanel-submit:hover {
+			filter: brightness(1.08);
+		}
+
+		.aiEnginesPanel-formTitle {
+			color: themed('form-txt') !important;
+		}
+
+		.aiEnginesPanel-itemEditing {
+			border-left-color: themed('form-field-border') !important;
+		}
+
+		.aiEnginesPanel-cancelEdit {
+			color: themed('form-txt') !important;
+			border-color: themed('form-field-border') !important;
+		}
+
+		.aiEnginesPanel-remove {
+			color: themed('form-txt') !important;
+			opacity: 0.9;
+		}
+
+		.aiEnginesPanel-testLine {
+			color: themed('form-txt') !important;
+			background-color: themed('form-test-bg') !important;
+			border: 1px solid themed('form-field-border') !important;
+			opacity: 1;
+		}
+
+		.aiEnginesPanel-testDetails {
+			color: themed('form-txt') !important;
+		}
+
+		.aiEnginesPanel-debugPre {
+			color: themed('form-txt') !important;
+			background-color: themed('form-test-bg') !important;
+			border: 1px solid themed('form-field-border') !important;
+		}
+
+		/* 元数据识别 */
+		.metadataInferenceSettings-hint {
+			color: themed('form-muted') !important;
+		}
+
+		.metadataInferenceSettings-label {
+			color: themed('form-txt') !important;
+		}
+
+		.metadataInferenceSettings-select {
+			color: themed('form-txt') !important;
+			background-color: themed('form-field-bg') !important;
+			border: 1px solid themed('form-field-border') !important;
+		}
+
+		.metadataInferenceSettings-textarea {
+			color: themed('form-txt') !important;
+			background-color: themed('form-field-bg') !important;
+			border: 1px solid themed('form-field-border') !important;
+		}
+
+		.metadataInferenceSettings-keys {
+			border-color: themed('form-field-border') !important;
+			background-color: themed('form-test-bg') !important;
+		}
+
+		.metadataInferenceSettings-keysTitle {
+			color: themed('form-muted') !important;
+		}
+
+		.metadataInferenceSettings-keysCode {
+			color: themed('form-txt') !important;
+		}
+	}
+}
+
+.aiSettingsModal-actions {
+	padding-top: $spacer-small;
+	flex-shrink: 0;
+	border-top: 1px solid transparent;
+	margin-top: $spacer-tiny;
+
+	@include themify($aiSettingsFormThemes) {
+		border-top-color: themed('form-divider');
+	}
+
+	.Button {
+		font-size: 0.9375rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		padding: 11px 22px;
+		border-radius: 8px;
+	}
+}

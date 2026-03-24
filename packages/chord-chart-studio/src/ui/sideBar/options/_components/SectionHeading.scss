@@ -1,0 +1,18 @@
+@import '../../../../../scss/abstract';
+
+.sb-optionSectionHeading {
+	margin-top: $spacer-small;
+	margin-bottom: $spacer-tiny;
+	padding-top: $spacer-tiny;
+
+	font-size: 0.7rem;
+	font-weight: $weight-bold;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	opacity: 0.72;
+
+	&:first-child {
+		margin-top: 0;
+		padding-top: 0;
+	}
+}

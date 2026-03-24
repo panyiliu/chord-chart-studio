@@ -1,23 +1,46 @@
 @import '../../../../scss/abstract';
 
 $themes: (
-	light: (),
+	light: (
+		editorSrc-bg: cv(light-background),
+		inputHeader-txt: cv(light-foreground, fade),
+		inputHeader-bg: cv(light-primary),
+		inputHeader-gutter: cv(light-primary),
+		headerTool-border: cv(light-foreground, light20),
+		headerTool-borderHover: cv(light-accent, light20),
+		headerTool-fg: cv(light-foreground),
+		headerTool-fgHover: cv(light-foreground),
+		headerTool-outline: cv(light-accent),
+		convertHero-bg: cv(light-accent, fade),
+		convertHero-border: cv(light-accent, light20),
+	),
 	dark: (
 		editorSrc-bg: cv(dark-secondary, dark5),
 		inputHeader-txt: cv(dark-foreground, fade),
 		inputHeader-bg: cv(dark-secondary, light10),
 		inputHeader-gutter: cv(dark-secondary, dark5),
+		headerTool-border: cv(dark-foreground, dark30),
+		headerTool-borderHover: cv(dark-accent, light20),
+		headerTool-fg: cv(dark-foreground),
+		headerTool-fgHover: cv(dark-foreground),
+		headerTool-outline: cv(dark-accent),
+		convertHero-bg: cv(dark-accent, dark20),
+		convertHero-border: cv(dark-accent, light20),
 	),
 );
 
-$headerVPadding: 3px;
-$headerHeight: 20px;
+$headerVPadding: 0;
+$headerHeight: 52px;
 
 .songEditor-headers {
 	display: flex;
+	position: sticky;
+	top: 0;
+	z-index: 12;
 
-	height: $headerHeight;
-	text-transform: uppercase;
+	min-height: $headerHeight;
+	height: auto;
+	text-transform: none;
 	padding: $headerVPadding 0;
 	text-align: center;
 	@include font-size(small);
@@ -30,10 +53,369 @@ $headerHeight: 20px;
 
 .songEditor-sourceHeader {
 	flex: 0 1 50%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 8px 10px;
+	box-sizing: border-box;
+	min-width: 0;
+}
+
+.songEditor-sourceHeader-text {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex: 0 1 auto;
+	min-width: 0;
+	gap: 4px;
+	white-space: nowrap;
+}
+
+.songEditor-sourceHeader-actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	flex-wrap: nowrap;
+	gap: 6px;
+	flex: 1 1 auto;
+	min-width: 0;
+	max-width: 100%;
+}
+
+.songEditor-actionRail {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	min-width: 0;
+	width: 100%;
+}
+
+.songEditor-actionCore {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-width: 0;
+}
+
+.songEditor-convertWrap {
+	display: inline-flex;
+	align-items: center;
+}
+.songEditor-actionAux {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+.songEditor-toolbarBtn {
+	flex: 0 0 auto;
+	margin: 0;
+	height: 36px;
+	padding: 0 10px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	cursor: pointer;
+	text-transform: none;
+	white-space: nowrap;
+	border-radius: 8px;
+	border: 1px solid transparent;
+	transition: $transition-interactive;
+	font-weight: 600;
+	@include font-size(tiny);
+
+	@include themify($themes) {
+		color: themed('inputHeader-txt');
+		background-color: themed('inputHeader-bg');
+		border-color: themed('headerTool-border');
+	}
+
+	.icon { @include font-size(tiny); opacity: 0.9; }
+	.icon {
+		@include font-size(small);
+		opacity: 0.95;
+	}
+
+	&:hover:not(:disabled) {
+		@include themify($themes) {
+			background-color: themed('inputHeader-gutter');
+			border-color: themed('headerTool-borderHover');
+		}
+		transform: translateY(-1px);
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.45;
+	}
+}
+
+.songEditor-toolbarBtn--convert {
+	font-weight: 700;
+	padding: 0 14px;
+	box-shadow: 0 6px 18px rgba(34, 197, 94, 0.18);
+	@include themify($themes) {
+		background: linear-gradient(
+			135deg,
+			themed('inputHeader-gutter') 0%,
+			themed('convertHero-bg') 100%
+		);
+		border-color: themed('convertHero-border');
+	}
+}
+
+.songEditor-toolbarBtn--convert:hover:not(:disabled) {
+	box-shadow: 0 10px 22px rgba(34, 197, 94, 0.26);
+}
+
+.songEditor-toolbarBtn--convert .icon {
+	animation: songEditor-convert-pulse 1400ms ease-in-out infinite;
+}
+
+.songEditor-toolbarBtn--ai,
+.songEditor-toolbarBtn--convert {
+	font-weight: 700;
+	@include font-size(small);
+}
+
+.songEditor-toolbarBtn--iconOnly {
+	width: 36px;
+	height: 36px;
+	padding: 0;
+}
+
+.songEditor-toolbarBtn--active {
+	@include themify($themes) {
+		background-color: themed('inputHeader-gutter');
+		border-color: themed('headerTool-borderHover');
+		color: themed('headerTool-fgHover');
+	}
+}
+
+@keyframes songEditor-toolbar-enter {
+	from {
+		opacity: 0;
+		transform: translateY(-6px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes songEditor-convert-pulse {
+	0%,
+	100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.08);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.songEditor-toolbarBtn {
+		animation: none !important;
+		transition: none !important;
+		transform: none !important;
+	}
+}
+
+.songEditor-sourceToolbarGroup {
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 4px;
+	flex: 0 0 auto;
+	min-width: 0;
+}
+
+.songEditor-sourceToolbarGroup--debug {
+	opacity: 0.92;
+}
+
+.songEditor-sourceToolbarGroup--chordmark {
+	align-items: center;
+}
+
+.songEditor-sourceToolbarSep {
+	flex: 0 0 auto;
+	width: 1px;
+	height: 16px;
+	align-self: center;
+	margin: 0 2px;
+	border-radius: 1px;
+	opacity: 0.55;
+
+	@include themify($themes) {
+		background-color: themed('headerTool-border');
+	}
+}
+
+.songEditor-metadataLogToggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	margin: 0;
+	padding: 2px 4px;
+	cursor: pointer;
+	user-select: none;
+	white-space: nowrap;
+	text-transform: none;
+	letter-spacing: 0.02em;
+	border-radius: 4px;
+	transition: $transition-interactive;
+	@include font-size(tiny);
+
+	@include themify($themes) {
+		color: themed('inputHeader-txt');
+	}
+
+	&:hover {
+		@include themify($themes) {
+			background-color: themed('inputHeader-gutter');
+		}
+	}
+
+	input {
+		margin: 0;
+		cursor: pointer;
+	}
+}
+
+.songEditor-headerToolBtn {
+	flex: 0 0 auto;
+	margin: 0;
+	padding: 2px 8px;
+	cursor: pointer;
+	text-transform: none;
+	letter-spacing: 0.02em;
+	white-space: nowrap;
+	border-radius: 4px;
+	border: 1px solid transparent;
+	transition: $transition-interactive;
+	@include font-size(tiny);
+
+	@include themify($themes) {
+		color: themed('inputHeader-txt');
+		background-color: themed('editorSrc-bg');
+		border-color: themed('headerTool-border');
+	}
+
+	&:hover:not(:disabled) {
+		@include themify($themes) {
+			background-color: themed('inputHeader-gutter');
+			border-color: themed('headerTool-borderHover');
+			color: themed('headerTool-fgHover');
+		}
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.45;
+	}
+
+	&:focus-visible {
+		@include themify($themes) {
+			outline: 2px solid themed('headerTool-outline');
+		}
+		outline-offset: 2px;
+	}
+}
+
+.songEditor-headerToolBtn--primary {
+	font-weight: 700;
+	padding: 5px 14px;
+	border-radius: 8px;
+	@include font-size(small);
+
+	@include themify($themes) {
+		border-color: themed('headerTool-borderHover');
+		background-color: themed('inputHeader-gutter');
+		box-shadow: 0 6px 16px rgba(2, 6, 23, 0.18);
+	}
+
+	&:hover:not(:disabled) {
+		@include themify($themes) {
+			border-color: themed('headerTool-outline');
+		}
+	}
+}
+
+.songEditor-headerToolBtn--ai {
+	padding: 4px 12px;
+	border-radius: 8px;
+	font-weight: 700;
+	@include font-size(small);
+
+	@include themify($themes) {
+		background-color: themed('inputHeader-gutter');
+		border-color: themed('headerTool-borderHover');
+	}
+}
+
+.songEditor-headerIconBtn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	margin: 0;
+	padding: 0;
+	line-height: 1;
+	cursor: pointer;
+	border-radius: 6px;
+	border: 1px solid transparent;
+	flex-shrink: 0;
+	text-transform: none;
+	transition: $transition-interactive;
+
+	.icon {
+		@include font-size(tiny);
+		opacity: 0.92;
+		line-height: 1;
+	}
+
+	@include themify($themes) {
+		color: themed('inputHeader-txt');
+		background-color: themed('editorSrc-bg');
+		border-color: themed('headerTool-border');
+	}
+
+	&:hover {
+		@include themify($themes) {
+			background-color: themed('inputHeader-gutter');
+			border-color: themed('headerTool-borderHover');
+			color: themed('headerTool-fgHover');
+		}
+	}
+
+	&:focus-visible {
+		@include themify($themes) {
+			outline: 2px solid themed('headerTool-outline');
+		}
+		outline-offset: 2px;
+	}
+}
+
+.songEditor-headerIconBtn--active {
+	@include themify($themes) {
+		background-color: themed('inputHeader-gutter');
+		border-color: themed('headerTool-borderHover');
+		color: themed('headerTool-fgHover');
+	}
 }
 
 .songEditor-previewHeader {
 	flex: 0 1 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 8px 10px;
 }
 
 .songEditor {
@@ -49,6 +431,7 @@ $headerHeight: 20px;
 	flex: 0 1 50%;
 	display: flex;
 	overflow-y: scroll;
+	position: relative;
 
 	@include themify($themes) {
 		background-color: themed('editorSrc-bg');

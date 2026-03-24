@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Icon from '../../../_components/Icon.jsx';
+import { useI18n } from '../../../i18n/I18nProvider';
 
 function NavEntry(props) {
 	const { label, icon, editorMode, setEditorMode, isActive, isDisabled } =
 		props;
+	const { t } = useI18n();
 
 	const classNames = ['mainNavEntry'];
 
@@ -25,7 +27,7 @@ function NavEntry(props) {
 			<span className={'mainNavEntry-icon'}>
 				<Icon iconName={icon} />
 			</span>
-			{label}
+			{t(label)}
 		</li>
 	);
 }

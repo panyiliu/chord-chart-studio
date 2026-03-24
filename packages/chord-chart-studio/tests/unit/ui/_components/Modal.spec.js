@@ -6,6 +6,10 @@ import userEvent from '@testing-library/user-event';
 
 import Modal from '../../../../src/ui/_components/Modal';
 
+jest.mock('../../../../src/ui/theme/useEffectiveUiTheme', () => ({
+	useEffectiveUiTheme: () => 'dark',
+}));
+
 afterEach(cleanup);
 
 describe('Modal', () => {

@@ -1,7 +1,9 @@
 @import '../../../../scss/abstract';
 
 $themes: (
-	light: (),
+	light: (
+		editor-txt: cv(light-foreground, dark10),
+	),
 	dark: (
 		editor-txt: cv(dark-foreground, dark10),
 	),

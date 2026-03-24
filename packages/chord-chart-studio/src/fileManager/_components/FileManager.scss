@@ -3,9 +3,63 @@
 
 .fileManager-isExpanded {
 	@include font-size(small);
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: $spacer-tiny;
+	padding: 0 $spacer-tiny-plus $spacer-tiny-plus;
+	min-width: 0;
 
 	.leftBar-isCollapsed & {
 		display: none;
+	}
+}
+
+.fileManager-actionsWrap {
+	padding: 6px;
+	border-radius: 8px;
+	margin: 0;
+	box-sizing: border-box;
+	@include themify($themes) {
+		background-color: themed('actions-bg');
+		border: 1px solid themed('fileEntry-border');
+		box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+	}
+
+	overflow: hidden;
+}
+
+.fileManager-actionsGroup {
+	margin-bottom: 0;
+	padding-bottom: 4px;
+
+	&:last-child {
+		padding-bottom: 0;
+	}
+}
+
+.fileManager-actionsGroup--divider {
+	margin-top: 2px;
+	padding-top: 3px;
+	border-top-width: 1px;
+	border-top-style: solid;
+	@include themify($themes) {
+		border-top-color: themed('fileEntry-border');
+	}
+
+	.fileManager-actionsGroup-title {
+		margin-bottom: 2px;
+	}
+}
+
+.fileManager-actionsGroup-title {
+	font-weight: 700;
+	@include font-size(tiny);
+	margin: 0 0 4px;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	@include themify($themes) {
+		color: themed('fileManager-sectionTitle');
 	}
 }
 
@@ -17,31 +71,101 @@
 }
 
 .fileManager-actionsList {
-	padding: $spacer-small;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	@include themify($themes) {
-		background-color: themed('actions-bg');
-	}
+	padding: 0;
+	display: grid;
+	gap: 2px;
+	align-items: stretch;
+}
+
+.fileManager-actionsList--compactAll {
+	/* 空白 + 当前（共 6 项）尽量紧凑放入窄侧栏 */
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 1px;
+}
+
+.fileManager-actionsList--compactAll .fileManagerAction-row {
+	padding: 2px 1px 3px;
+}
+
+.fileManager-actionsList--compactAll .fileManagerAction-icon {
+	gap: 0;
+}
+
+.fileManager-actionsList--compactAll .fileManagerAction-label {
+	line-height: 1.05;
+}
+
+/* 新建：两行 × 每行两列（共 4 项） */
+.fileManager-actionsGroup:not(.fileManager-actionsGroup--divider)
+	.fileManager-actionsList {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* 当前：一行 5 列，紧凑占位 */
+.fileManager-actionsGroup--divider .fileManager-actionsList {
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 1px;
+}
+
+.fileManager-actionsGroup--divider .fileManagerAction-row {
+	padding: 2px 0 3px;
+}
+
+.fileManager-actionsGroup--divider .fileManagerAction-icon {
+	gap: 0;
+}
+
+.fileManager-actionsGroup--divider .fileManagerAction-icon .icon {
+	font-size: 1.05rem;
+	line-height: 1;
+}
+
+.fileManager-actionsGroup--divider .fileManagerAction-label {
+	font-size: 0.8rem;
+	line-height: 1.15;
+	word-break: keep-all;
+	overflow-wrap: anywhere;
+	hyphens: none;
 }
 
 .fileManagerAction {
-	flex: 0 1 auto;
-	padding: $spacer-tiny;
-	margin-right: $spacer-tiny;
-	white-space: nowrap;
+	min-width: 0;
+	padding: 0;
+	margin: 0;
+	display: block;
+	box-sizing: border-box;
+}
 
-	&:hover {
-		cursor: not-allowed;
-	}
+.fileManagerAction-row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 3px 2px 4px;
+	border-radius: 8px;
+	min-width: 0;
+	min-height: 0;
+	white-space: normal;
+	transition: $transition-interactive;
 
-	&:hover:not(.fileManagerAction-isDisabled) {
+	&:focus-visible {
 		@include themify($themes) {
-			background-color: themed('action-bgHover');
+			box-shadow: 0 0 0 2px themed('fileEntry-bgActive');
 		}
-		cursor: pointer;
 	}
+}
+
+.fileManagerAction:not(.fileManagerAction-isDisabled)
+	.fileManagerAction-row:hover {
+	@include themify($themes) {
+		background-color: themed('action-bgHover');
+	}
+	cursor: pointer;
+}
+
+.fileManagerAction-isDisabled .fileManagerAction-row {
+	cursor: not-allowed;
 }
 
 .fileManagerAction-isDisabled {
@@ -51,29 +175,162 @@
 }
 
 .fileManagerAction-icon {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1px;
+	min-width: 0;
+	max-width: 100%;
+	width: 100%;
+	@include font-size(tiny);
+
 	.icon {
-		@include font-size(normal);
+		@include font-size(small);
+		flex-shrink: 0;
+		opacity: 1;
+		line-height: 1;
 	}
+}
+
+.fileManagerAction-label {
+	display: block;
+	width: 100%;
+	min-width: 0;
+	text-align: center;
+	line-height: 1.1;
+	word-break: break-word;
+	hyphens: auto;
+	white-space: normal;
+	overflow: visible;
+	@include font-size(tiny);
 }
 
 .fileManager-entriesList {
 	padding-left: 0;
 	list-style: none;
+	margin: 0;
+	max-height: 280px;
+	overflow: auto;
+	border-radius: 8px;
+	padding: 8px;
+	box-sizing: border-box;
+	width: 100%;
+
+	@include themify($themes) {
+		background-color: themed('actions-bg');
+		border: 1px solid themed('fileEntry-border');
+		box-shadow:
+			0 10px 28px rgba(2, 6, 23, 0.06),
+			0 0 0 1px rgba(15, 23, 42, 0.03);
+	}
+
+	backdrop-filter: blur(10px);
+	position: relative;
+	z-index: 1;
+}
+
+.fileManager-searchWrap {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.fileManager-searchInput {
+	flex: 1 1 auto;
+	min-width: 0;
+	padding: 5px 8px;
+	border-radius: 6px;
+	border: 1px solid transparent;
+	outline: none;
+	transition: $transition-interactive;
+	@include font-size(tiny);
+
+	@include themify($themes) {
+		background-color: themed('actions-bg');
+		color: themed('fileEntry-txt');
+		border-color: themed('fileEntry-border');
+	}
+
+	&:focus,
+	&:focus-visible {
+		@include themify($themes) {
+			border-color: themed('fileEntry-bgActive');
+		}
+	}
+}
+
+.fileManager-searchMeta {
+	flex: 0 0 auto;
+	min-width: 36px;
+	padding: 2px 6px;
+	border-radius: 999px;
+	text-align: center;
+	@include font-size(tiny);
+
+	@include themify($themes) {
+		color: themed('fileEntry-txt');
+		background-color: themed('fileEntry-bgHover');
+	}
+
+	@include themify($themes) {
+		border: 1px solid themed('fileEntry-border');
+	}
+}
+
+.fileManager-emptyTip {
+	margin: 0;
+	@include font-size(tiny);
+	@include themify($themes) {
+		color: themed('fileManager-sectionTitle');
+	}
+	opacity: 0.95;
+}
+
+.fileManager-backupError {
+	margin: 0;
+	@include font-size(tiny);
+	color: #dc2626;
+	opacity: 0.95;
+}
+
+.fileManager-backupStatus {
+	margin: 0;
+	@include font-size(tiny);
+	color: #16a34a;
+	opacity: 0.95;
 }
 
 .fileManagerEntry {
 	cursor: pointer;
-	padding: 0.1rem 0;
+	padding: 0.25rem 0;
+	border-radius: 6px;
+	transition: $transition-interactive;
 
 	&:hover {
 		@include themify($themes) {
 			background-color: themed('fileEntry-bgHover');
+		}
+
+		@include themify($themes) {
+			box-shadow:
+				0 10px 24px rgba(2, 6, 23, 0.08),
+				0 0 0 1px rgba(15, 23, 42, 0.04);
 		}
 	}
 
 	&.fileManagerEntry-isSelected {
 		@include themify($themes) {
 			background-color: themed('fileEntry-bgActive');
+		}
+
+		@include themify($themes) {
+			box-shadow:
+				0 0 0 1px themed('fileEntry-bgActive'),
+				0 12px 28px rgba(2, 6, 23, 0.10);
 		}
 	}
 }
@@ -82,6 +339,7 @@
 	box-sizing: border-box;
 	width: 100%;
 	padding: 0 $spacer-small;
+	border-radius: 6px;
 
 	background-color: transparent;
 	border: none;
@@ -103,5 +361,13 @@
 			color: themed('fileEntry-txtRenamed');
 		}
 		cursor: text;
+	}
+
+	&:focus-visible {
+		@include themify($themes) {
+			box-shadow: 0 0 0 2px themed('fileEntry-bgActive');
+			border-radius: 6px;
+		}
+		outline: none;
 	}
 }

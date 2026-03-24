@@ -1,7 +1,15 @@
 @import 'abstract';
 
 $themes: (
-	light: (),
+	light: (
+		link1: cv(light-accent),
+		link1-hover: cv(light-accent, dark10),
+		link1-active: cv(light-accent, dark20),
+		scrollbar-bg: cv(light-background),
+		scrollbar-thumb: cv(light-foreground, light20),
+		scrollbar-hover: cv(light-foreground, light10),
+		focus-ring: cv(light-accent),
+	),
 	dark: (
 		// links
 		link1: cv(dark-accent),
@@ -11,6 +19,7 @@ $themes: (
 		scrollbar-bg: cv(dark-secondary),
 		scrollbar-thumb: cv(dark-foreground, dark30),
 		scrollbar-hover: cv(dark-foreground, dark20),
+		focus-ring: cv(dark-accent),
 	),
 );
 
@@ -29,9 +38,36 @@ body {
 	@include font-size(base);
 	font-family: $font-family-base;
 	line-height: $line-height-base;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+:focus-visible {
+	outline: 2px solid transparent;
+	outline-offset: 2px;
+	@include themify($themes) {
+		outline-color: themed('focus-ring');
+	}
+}
+
+:focus:not(:focus-visible) {
+	outline: none;
 }
 
 .link1 {
+	transition: $transition-interactive;
+
 	@include themify($themes) {
 		color: themed('link1');
 	}
@@ -54,7 +90,7 @@ body {
 	width: 10px;
 	height: 10px;
 	@include themify($themes) {
-		background-color: red;
+		background-color: themed('scrollbar-bg');
 	}
 }
 

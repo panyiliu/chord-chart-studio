@@ -47,7 +47,8 @@
     "build": "npm run lint && npm run format && npm run test && lerna run build && cp -rf packages/chord-chart-studio/build/* packages/documentation/build/app",
     "lint": "eslint packages",
     "format": "prettier --write \"**/*.{js,jsx,json,ts,md,scss,css}\"",
-    "test": "jest"
+    "test": "jest",
+    "dev:backup": "node scripts/dev-backup.mjs"
   },
   "workspaces": [
     "packages/*"

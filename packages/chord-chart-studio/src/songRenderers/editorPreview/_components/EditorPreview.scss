@@ -1,9 +1,11 @@
 @import '../../../../scss/abstract';
 
 $themes: (
-	light: (),
+	light: (
+		editorPreview-txt: cv(light-foreground),
+	),
 	dark: (
-		editorPreview-txt: cv(dark-foreground, dark10),
+		editorPreview-txt: cv(dark-foreground),
 	),
 );
 
@@ -11,6 +13,10 @@ $themes: (
 	box-sizing: border-box;
 	padding: $spacer-tiny;
 	min-height: 100%;
+
+	@include themify($themes) {
+		color: themed('editorPreview-txt');
+	}
 }
 
 .cmTheme-fadeRepeats {

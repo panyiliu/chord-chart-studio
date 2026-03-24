@@ -14,11 +14,18 @@
 	vertical-align: middle;
 }
 
+.mainNav {
+	position: relative;
+	min-height: 44px;
+}
+
 .mainNavEntry {
 	display: inline-block;
 	padding: $spacer-small $spacer-medium;
 	cursor: default;
 	font-weight: bold;
+	border-radius: 6px;
+	transition: $transition-interactive;
 
 	&:hover:not(.mainNavEntry-isActive) {
 		cursor: pointer;
@@ -52,5 +59,37 @@
 	.icon {
 		margin-right: $spacer-tiny;
 		@include font-size(normal);
+	}
+}
+
+.mainNav-titleEditor {
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	z-index: 2;
+
+	label {
+		@include font-size(small);
+		font-weight: $weight-bold;
+		opacity: 0.85;
+	}
+
+	input {
+		width: 200px;
+		max-width: 24vw;
+		padding: 6px 10px;
+		border-radius: 8px;
+		border: 1px solid transparent;
+		@include font-size(small);
+
+		@include themify($themes) {
+			background-color: themed('header-bgHover');
+			border-color: themed('header-border');
+			color: themed('header-txt');
+		}
 	}
 }

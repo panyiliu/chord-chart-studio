@@ -1,9 +1,13 @@
 @import '../../../../scss/abstract';
 
 $themes: (
-	light: (),
+	light: (
+		playRenderer-bg: cv(light-background),
+		playRenderer-txt: cv(light-foreground),
+	),
 	dark: (
 		playRenderer-bg: cv(dark-secondary),
+		playRenderer-txt: cv(dark-foreground),
 	),
 );
 
@@ -13,6 +17,10 @@ $themes: (
 	position: relative; // needs to be relative so the "absolute" trick works to fill the height
 	height: 100%;
 	overflow-y: scroll;
+
+	@include themify($themes) {
+		background-color: themed('playRenderer-bg');
+	}
 }
 
 .playRendererWrapper2 {
@@ -27,30 +35,50 @@ $themes: (
 	box-sizing: border-box;
 	min-height: 100%;
 
+	@include themify($themes) {
+		color: themed('playRenderer-txt');
+	}
+
 	.cmSong {
 		padding: 0 !important;
+
+		/* chord-mark 渲染出来的元素在浅色主题下可能继承到不合适的颜色 */
+		color: inherit !important;
+	}
+
+	.cmSong * {
+		color: inherit !important;
+	}
+
+	// Screen view：复用 Print/PDF 的 chord 风格 CSS 变量
+	// 由于 play view 会把 `.cmSong *` 颜色强制继承，这里需要用 `!important` 覆盖。
+	.cmChordSymbol {
+		color: var(--print-chord-color, #1565c0) !important;
+		font-size: calc(1em * var(--print-chord-scale, 1.15)) !important;
+		font-weight: var(--print-chord-weight, 600) !important;
+		text-shadow: var(--print-chord-text-shadow, none) !important;
 	}
 }
 
 .playRenderer--columns-1 {
 	column-count: 1;
-	padding: $spacer-small;
+	padding: $spacer-small-plus;
 }
 .playRenderer--columns-2 {
 	column-count: 2;
 	column-fill: auto;
 	height: 100%;
-	padding: $spacer-small;
+	padding: $spacer-small-plus;
 }
 .playRenderer--columns-3 {
 	column-count: 3;
 	column-fill: auto;
 	height: 100%;
-	padding: $spacer-small;
+	padding: $spacer-small-plus;
 }
 .playRenderer--columns-4 {
 	column-count: 4;
 	column-fill: auto;
 	height: 100%;
-	padding: $spacer-small;
+	padding: $spacer-small-plus;
 }

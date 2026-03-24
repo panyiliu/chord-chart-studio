@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { getStore } from './state/store';
 
 import ErrorBoundary from './ui/_components/ErrorBoundary';
+import UiThemeRootSync from './ui/theme/UiThemeRootSync';
 
 let root;
 
@@ -17,6 +18,7 @@ export default function renderController(Controller, params) {
 	root.render(
 		<Provider store={getStore()}>
 			<React.StrictMode>
+				<UiThemeRootSync />
 				<ErrorBoundary>
 					<Controller {...params} />
 				</ErrorBoundary>

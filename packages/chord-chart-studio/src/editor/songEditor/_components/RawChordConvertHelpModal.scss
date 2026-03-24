@@ -1,0 +1,168 @@
+@import '../../../../scss/abstract';
+
+$themes: (
+	light: (
+		rcHelp-overlay: rgba(15, 23, 42, 0.35),
+		rcHelp-panel-bg: cv(light-secondary),
+		rcHelp-border: cv(light-foreground, light20),
+		rcHelp-txt: cv(light-foreground, fade),
+		rcHelp-muted: cv(light-foreground, light20),
+		rcHelp-code: cv(light-accent, dark10),
+	),
+	dark: (
+		rcHelp-overlay: rgba(0, 0, 0, 0.45),
+		rcHelp-panel-bg: cv(dark-secondary, dark5),
+		rcHelp-border: cv(dark-secondary, light10),
+		rcHelp-txt: cv(dark-foreground, fade),
+		rcHelp-muted: cv(dark-foreground, light20),
+		rcHelp-code: cv(dark-accent, light30),
+	),
+);
+
+.mod-RawChordConvertHelpModal {
+	position: fixed;
+	inset: 0;
+	z-index: 12000;
+}
+
+.mod-RawChordConvertHelpModal-overlay {
+	position: absolute;
+	inset: 0;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	@include themify($themes) {
+		background: themed('rcHelp-overlay');
+	}
+}
+
+.mod-RawChordConvertHelpModal-panel {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: min(640px, calc(100vw - 32px));
+	max-height: min(82vh, 640px);
+	display: flex;
+	flex-direction: column;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+	text-align: left;
+
+	@include themify($themes) {
+		background-color: themed('rcHelp-panel-bg');
+		border: 1px solid themed('rcHelp-border');
+		color: themed('rcHelp-txt');
+	}
+}
+
+.mod-RawChordConvertHelpModal-head {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: $spacer-small;
+	padding: 12px 14px;
+	flex: 0 0 auto;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mod-RawChordConvertHelpModal-title {
+	margin: 0;
+	font-weight: 600;
+	text-transform: none;
+	letter-spacing: 0.02em;
+	line-height: 1.35;
+	@include font-size(small);
+}
+
+.mod-RawChordConvertHelpModal-close {
+	flex: 0 0 auto;
+	margin: 0;
+	padding: 4px 10px;
+	cursor: pointer;
+	text-transform: none;
+	letter-spacing: 0.02em;
+	border-radius: 4px;
+	border: 1px solid transparent;
+	@include font-size(tiny);
+
+	@include themify($themes) {
+		color: themed('rcHelp-txt');
+		background-color: cv(dark-secondary, light3);
+		border-color: cv(dark-foreground, dark30);
+	}
+
+	&:hover {
+		@include themify($themes) {
+			border-color: cv(dark-accent, light20);
+		}
+	}
+}
+
+.mod-RawChordConvertHelpModal-body {
+	padding: 12px 14px 14px;
+	overflow: auto;
+	flex: 1 1 auto;
+	@include font-size(tiny);
+	line-height: 1.55;
+	text-transform: none;
+	letter-spacing: 0.02em;
+}
+
+.mod-RawChordConvertHelpModal-lead {
+	margin: 0 0 10px;
+
+	strong {
+		font-weight: 600;
+	}
+}
+
+.mod-RawChordConvertHelpModal-steps {
+	margin: 0;
+	padding-left: 1.25em;
+
+	> li {
+		margin-bottom: 10px;
+	}
+
+	strong {
+		font-weight: 600;
+	}
+
+	ul {
+		margin: 6px 0 0;
+		padding-left: 1.15em;
+	}
+
+	li li {
+		margin-bottom: 4px;
+	}
+
+	code {
+		padding: 0 3px;
+		border-radius: 3px;
+		@include font-size(tiny);
+		@include themify($themes) {
+			background: rgba(255, 255, 255, 0.06);
+			color: themed('rcHelp-code');
+		}
+	}
+}
+
+.mod-RawChordConvertHelpModal-foot {
+	margin: 12px 0 0;
+	@include themify($themes) {
+		color: themed('rcHelp-muted');
+	}
+
+	code {
+		padding: 0 3px;
+		border-radius: 3px;
+		word-break: break-all;
+		@include themify($themes) {
+			background: rgba(255, 255, 255, 0.06);
+		}
+	}
+}

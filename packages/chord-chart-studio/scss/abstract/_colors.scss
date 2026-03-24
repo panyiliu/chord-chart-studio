@@ -1,22 +1,43 @@
-// Dark theme
-// Source: https://coolors.co/f4f4f4-2e4052-303846-293132-fabf2b-74f14e
-$whiteSmoke: rgba(244, 244, 244, 1);
-$onyx: rgba(48, 56, 70, 1);
-$charcoal: rgba(46, 64, 82, 1);
-$gunMetal: rgba(41, 49, 50, 1);
-$saffron: rgba(250, 191, 43, 1);
+// Dark theme — slate / ocean base (no purple): OLED-style bg + layered surfaces
+// Ref: ui-ux-pro-max — Background #020617, surfaces #0F172A / #1E293B, CTA #22C55E
+$slate50: #f8fafc;
+$slate950: #020617;
+$slate900: #0f172a;
+$slate800: #1e293b;
+$emerald500: #22c55e;
 $bitterSweet: rgba(255, 112, 96, 1);
+$saffron: rgba(250, 191, 43, 1);
 $screamingGreen: rgba(116, 241, 78, 1);
 
+// Light app chrome — slate paper + neutral tint + emerald accent (readable on white)
+$lightFg: #0f172a;
+$lightBg: #f8fafc;
+$lightPrimaryTint: #f1f5f9;
+$lightSecondarySurface: #ffffff;
+$lightAccent: #059669;
+// Light — left bar cards / list: visible edge + hover (ui-ux: border slate-300, hover slate-200)
+$lightHoverSurface: #e2e8f0;
+$lightBorderSubtle: #cbd5e1;
+$lightSectionLabel: #475569;
+
 $colors: (
-	// Light theme
-	// Dark theme
-	dark-foreground: $whiteSmoke,
-	dark-background: $onyx,
-	dark-accent: $saffron,
-	dark-primary: $charcoal,
-	dark-secondary: $gunMetal,
+	dark-foreground: $slate50,
+	dark-background: $slate950,
+	dark-primary: $slate900,
+	dark-secondary: $slate800,
+	dark-accent: $emerald500,
 	dark-red: $bitterSweet,
 	dark-yellow: $saffron,
-	dark-green: $screamingGreen
+	dark-green: $screamingGreen,
+	light-foreground: $lightFg,
+	light-background: $lightBg,
+	light-primary: $lightPrimaryTint,
+	light-secondary: $lightSecondarySurface,
+	light-accent: $lightAccent,
+	light-red: $bitterSweet,
+	light-yellow: $saffron,
+	light-green: $screamingGreen,
+	light-hover-surface: $lightHoverSurface,
+	light-border-subtle: $lightBorderSubtle,
+	light-section-label: $lightSectionLabel,
 );

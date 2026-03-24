@@ -44,9 +44,9 @@ describe('db/files: selectors', () => {
 				},
 			};
 			const expected = [
-				{ id: 'id2', title: 'aaa' },
-				{ id: 'id3', title: 'BBB' },
-				{ id: 'id1', title: 'CCC' },
+				{ id: 'id2', title: 'aaa', genreId: null, tagIds: [] },
+				{ id: 'id3', title: 'BBB', genreId: null, tagIds: [] },
+				{ id: 'id1', title: 'CCC', genreId: null, tagIds: [] },
 			];
 			const result = selectors.getAllTitles(state);
 
@@ -134,7 +134,14 @@ describe('db/files: selectors', () => {
 					},
 				},
 			};
-			const expected = { id: 'id1', title: 'CCC', content: 'content1' };
+			const expected = {
+				id: 'id1',
+				title: 'CCC',
+				content: 'content1',
+				author: '',
+				genreId: null,
+				tagIds: [],
+			};
 
 			const result = selectors.getOne(state, 'id1');
 

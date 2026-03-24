@@ -1,0 +1,415 @@
+@import '../../../../scss/abstract';
+@import '../../../ui/layout/app/_themes';
+
+.promptTemplatesPanel {
+	padding: $spacer-small 0;
+	border-bottom: 1px solid transparent;
+	@include themify($themes) {
+		border-bottom-color: themed('rightBar-border');
+	}
+}
+
+.promptTemplatesPanel--layout {
+	padding-top: 0;
+}
+
+.promptTemplatesPanel-top {
+	margin-bottom: $spacer-small;
+}
+
+.promptTemplatesPanel-topText {
+	margin-bottom: $spacer-tiny;
+}
+
+.promptTemplatesPanel-title {
+	font-weight: 600;
+	margin-bottom: 4px;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.promptTemplatesPanel-lead {
+	margin: 0;
+	line-height: 1.4;
+	@include font-size(small);
+	opacity: 0.92;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.promptTemplatesPanel-details {
+	@include font-size(small);
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+		border: 1px solid themed('rightBar-border');
+		border-radius: 6px;
+		background-color: themed('rightBar-bgHover');
+		padding: 2px 8px;
+	}
+}
+
+.promptTemplatesPanel-detailsSummary {
+	cursor: pointer;
+	user-select: none;
+	padding: 4px 2px;
+	list-style: none;
+	&::-webkit-details-marker {
+		display: none;
+	}
+}
+
+.promptTemplatesPanel-detailsBody {
+	padding: 0 2px 8px;
+	line-height: 1.45;
+	p {
+		margin: 0 0 8px;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.promptTemplatesPanel-detailsBody code {
+	font-size: 0.95em;
+	padding: 0 2px;
+	border-radius: 2px;
+	@include themify($themes) {
+		background-color: themed('rightBar-bg');
+	}
+}
+
+.promptTemplatesPanel-hint {
+	margin: 0 0 $spacer-small;
+	line-height: 1.4;
+	@include font-size(small);
+	opacity: 0.9;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.promptTemplatesPanel-hint code {
+	font-size: 0.95em;
+	padding: 0 2px;
+	border-radius: 2px;
+	@include themify($themes) {
+		background-color: themed('rightBar-bgHover');
+	}
+}
+
+.promptTemplatesPanel-body {
+	display: grid;
+	grid-template-columns: minmax(160px, 220px) minmax(0, 1fr);
+	gap: $spacer-small;
+	align-items: start;
+}
+
+@media (max-width: 640px) {
+	.promptTemplatesPanel-body {
+		grid-template-columns: 1fr;
+	}
+
+	.promptTemplatesPanel-sidebar {
+		max-height: none;
+	}
+}
+
+.promptTemplatesPanel-sidebar {
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	max-height: min(52vh, 420px);
+	border-radius: 8px;
+	padding: $spacer-tiny $spacer-tiny 0;
+	@include themify($themes) {
+		border: 1px solid themed('rightBar-border');
+		background-color: themed('rightBar-bgHover');
+	}
+}
+
+.promptTemplatesPanel-sidebarHead {
+	font-weight: 600;
+	@include font-size(small);
+	margin-bottom: 6px;
+	padding: 4px 4px 0;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.promptTemplatesPanel-list {
+	list-style: none;
+	padding: 0 4px;
+	margin: 0;
+	overflow-y: auto;
+	flex: 1 1 auto;
+	min-height: 80px;
+}
+
+.promptTemplatesPanel-item {
+	margin-bottom: 4px;
+}
+
+.promptTemplatesPanel-pill {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 6px;
+	width: 100%;
+	text-align: left;
+	cursor: pointer;
+	padding: 8px 10px;
+	font: inherit;
+	border-radius: 6px;
+	border: 1px solid transparent;
+	background: transparent;
+	@include font-size(small);
+	transition:
+		background-color 0.12s ease,
+		border-color 0.12s ease;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.promptTemplatesPanel-pill:hover {
+	@include themify($themes) {
+		background-color: themed('rightBar-bg');
+		border-color: themed('rightBar-border');
+	}
+}
+
+.promptTemplatesPanel-pillActive {
+	@include themify($themes) {
+		border-color: themed('rightBar-border');
+		background-color: themed('rightBar-bg');
+		box-shadow: inset 0 0 0 1px themed('rightBar-border');
+	}
+}
+
+.promptTemplatesPanel-pillDropTarget {
+	@include themify($themes) {
+		border-color: themed('rightBar-border');
+		background-color: themed('rightBar-bgHover');
+	}
+}
+
+.promptTemplatesPanel-pill[draggable='true'] {
+	cursor: grab;
+}
+
+.promptTemplatesPanel-pill[aria-grabbed='true'] {
+	opacity: 0.75;
+	cursor: grabbing;
+}
+
+.promptTemplatesPanel-pillName {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.promptTemplatesPanel-badge {
+	flex-shrink: 0;
+	opacity: 0.8;
+	@include font-size(tiny);
+	padding: 1px 5px;
+	border-radius: 4px;
+	@include themify($themes) {
+		background-color: themed('rightBar-bg');
+		border: 1px solid themed('rightBar-border');
+	}
+}
+
+.promptTemplatesPanel-sidebarFoot {
+	flex-shrink: 0;
+	padding: $spacer-tiny;
+	margin-top: auto;
+	border-top: 1px solid transparent;
+	@include themify($themes) {
+		border-top-color: themed('rightBar-border');
+	}
+}
+
+.promptTemplatesPanel-btnBlock {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.promptTemplatesPanel-main {
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.promptTemplatesPanel-editorSticky {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin-bottom: $spacer-tiny;
+	padding: 8px 10px;
+	border-radius: 8px;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	@include themify($themes) {
+		background-color: themed('rightBar-bgHover');
+		border: 1px solid themed('rightBar-border');
+		box-shadow: 0 1px 0 themed('rightBar-border');
+	}
+}
+
+.promptTemplatesPanel-editorStickyText {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	min-width: 0;
+	flex: 1 1 auto;
+}
+
+.promptTemplatesPanel-editorStickyLabel {
+	@include font-size(tiny);
+	opacity: 0.8;
+	flex-shrink: 0;
+}
+
+.promptTemplatesPanel-editorStickyName {
+	font-weight: 600;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	@include font-size(small);
+}
+
+.promptTemplatesPanel-editorStickyActions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	flex-shrink: 0;
+}
+
+.promptTemplatesPanel-toolbar {
+	margin-bottom: $spacer-tiny;
+}
+
+.promptTemplatesPanel-radioRow {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.promptTemplatesPanel-name {
+	flex: 1;
+	text-align: left;
+	cursor: pointer;
+	padding: 2px 6px;
+	font: inherit;
+	border: 1px solid transparent;
+	background: transparent;
+	border-radius: 2px;
+	@include font-size(small);
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.promptTemplatesPanel-nameActive {
+	@include themify($themes) {
+		border-color: themed('rightBar-border');
+		background-color: themed('rightBar-bgHover');
+	}
+}
+
+.promptTemplatesPanel-empty {
+	opacity: 0.85;
+	@include font-size(small);
+	padding: 8px 4px;
+}
+
+.promptTemplatesPanel-editor {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.promptTemplatesPanel-label {
+	font-size: 11px;
+	margin-top: $spacer-tiny;
+	margin-bottom: 2px;
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+	}
+}
+
+.promptTemplatesPanel-input,
+.promptTemplatesPanel-textarea {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 4px $spacer-tiny;
+	margin-bottom: $spacer-tiny;
+	font: inherit;
+	@include font-size(small);
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+		background-color: themed('rightBar-bgHover');
+		border: 1px solid themed('rightBar-border');
+	}
+}
+
+.promptTemplatesPanel-textarea {
+	resize: vertical;
+	min-height: 160px;
+	font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+	line-height: 1.35;
+}
+
+.promptTemplatesPanel-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: $spacer-tiny;
+	margin-top: $spacer-tiny;
+}
+
+.promptTemplatesPanel-btn {
+	padding: 4px $spacer-small;
+	cursor: pointer;
+	font: inherit;
+	@include font-size(small);
+	@include themify($themes) {
+		color: themed('rightBar-txt');
+		background-color: themed('rightBar-bgHover');
+		border: 1px solid themed('rightBar-border');
+	}
+}
+
+.promptTemplatesPanel-btnPrimary {
+	font-weight: 500;
+}
+
+.promptTemplatesPanel-btn:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
+.featureTemplateBindingsPanel-field {
+	margin-bottom: $spacer-tiny;
+}
+
+.featureTemplateBindingsPanel-preview {
+	margin: 2px 2px 0;
+	@include font-size(tiny);
+	opacity: 0.8;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}

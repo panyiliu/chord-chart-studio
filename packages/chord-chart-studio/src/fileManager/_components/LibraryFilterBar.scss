@@ -1,0 +1,252 @@
+@import '../../../scss/abstract';
+@import '../themes';
+
+.libraryFilter {
+	margin: 0;
+	width: 100%;
+	box-sizing: border-box;
+	position: relative;
+	z-index: 40;
+	font-family: 'Trebuchet MS', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei',
+		sans-serif;
+}
+
+.libraryFilter-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	align-items: flex-start;
+}
+
+.libraryFilter-cell {
+	position: relative;
+	flex: 1 1 auto;
+	min-width: min(140px, 100%);
+}
+
+.libraryFilter-trigger {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 7px 10px;
+	margin: 0;
+	font: inherit;
+	cursor: pointer;
+	border-radius: 8px;
+	text-align: left;
+	transition: $transition-interactive;
+
+	@include themify($themes) {
+		color: themed('fileEntry-txt');
+		background-color: themed('actions-bg');
+		border: 1px solid themed('fileEntry-border');
+		box-shadow: 0 6px 14px rgba(2, 6, 23, 0.08);
+	}
+
+	.icon {
+		flex-shrink: 0;
+		opacity: 0.85;
+		@include font-size(small);
+	}
+
+	&:hover:not(:disabled) {
+		@include themify($themes) {
+			box-shadow: 0 10px 24px rgba(2, 6, 23, 0.10);
+			border-color: themed('fileEntry-bgActive');
+		}
+	}
+
+	&:focus-visible {
+		@include themify($themes) {
+			box-shadow: 0 0 0 2px themed('fileEntry-bgActive');
+			border-color: themed('fileEntry-bgActive');
+		}
+		outline: none;
+	}
+}
+
+.libraryFilter-trigger--active {
+	@include themify($themes) {
+		border-color: themed('fileEntry-bgActive');
+		box-shadow:
+			0 0 0 1px themed('fileEntry-bgActive'),
+			0 10px 24px rgba(2, 6, 23, 0.12);
+	}
+}
+
+.libraryFilter-triggerLabel {
+	flex-shrink: 0;
+	font-weight: 700;
+	@include font-size(tiny);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	@include themify($themes) {
+		color: themed('fileManager-sectionTitle');
+	}
+}
+
+.libraryFilter-triggerSummary {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	@include font-size(small);
+	opacity: 0.96;
+}
+
+.libraryFilter-triggerMode {
+	flex-shrink: 0;
+	@include font-size(tiny);
+	opacity: 0.8;
+	max-width: 5.5em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.libraryFilter-pop {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: calc(100% + 4px);
+	max-height: min(240px, 42vh);
+	overflow: auto;
+	padding: 12px;
+	border-radius: 14px;
+	box-sizing: border-box;
+	box-shadow:
+		0 12px 30px rgba(0, 0, 0, 0.14),
+		0 0 0 1px rgba(15, 23, 42, 0.08);
+	backdrop-filter: blur(10px);
+
+	@include themify($themes) {
+		background-color: themed('actions-bg');
+		border: 1px solid themed('fileEntry-border');
+		color: themed('fileEntry-txt');
+	}
+
+	z-index: 80;
+}
+
+.libraryFilter-popHead {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin-bottom: 8px;
+	@include font-size(tiny);
+	opacity: 0.88;
+	line-height: 1.35;
+}
+
+.libraryFilter-linkBtn {
+	margin: 0;
+	padding: 2px 6px;
+	font: inherit;
+	cursor: pointer;
+	border-radius: 6px;
+	flex-shrink: 0;
+	@include font-size(tiny);
+
+	@include themify($themes) {
+		color: themed('fileEntry-bgActive');
+		background: transparent;
+		border: 1px solid themed('fileEntry-border');
+	}
+
+	&:hover {
+		@include themify($themes) {
+			background-color: themed('fileEntry-bgHover');
+		}
+	}
+
+	&:focus-visible {
+		@include themify($themes) {
+			box-shadow: 0 0 0 2px themed('fileEntry-bgActive');
+			border-color: themed('fileEntry-bgActive');
+		}
+		outline: none;
+	}
+}
+
+.libraryFilter-modeRow {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 14px;
+	margin-bottom: 8px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid transparent;
+
+	@include themify($themes) {
+		border-bottom-color: themed('fileEntry-border');
+	}
+}
+
+.libraryFilter-modeOption {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	cursor: pointer;
+	user-select: none;
+	@include font-size(tiny);
+
+	input {
+		margin: 0;
+		cursor: pointer;
+		flex-shrink: 0;
+	}
+}
+
+.libraryFilter-checkList {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.libraryFilter-checkList li {
+	margin-bottom: 2px;
+}
+
+.libraryFilter-checkRow {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+	padding: 6px 6px;
+	border-radius: 8px;
+	transition: $transition-interactive;
+	@include font-size(normal);
+
+	@include themify($themes) {
+		color: themed('fileEntry-txt');
+	}
+
+	input {
+		margin: 0;
+		cursor: pointer;
+		flex-shrink: 0;
+	}
+
+	&:hover {
+		@include themify($themes) {
+			background-color: themed('fileEntry-bgHover');
+		}
+	}
+
+	&:focus-within {
+		@include themify($themes) {
+			background-color: themed('fileEntry-bgHover');
+			box-shadow: 0 0 0 2px themed('fileEntry-bgActive');
+		}
+	}
+}
+
+.libraryFilter-empty {
+	padding: 6px 2px;
+	@include font-size(tiny);
+	opacity: 0.75;
+	font-style: italic;
+}

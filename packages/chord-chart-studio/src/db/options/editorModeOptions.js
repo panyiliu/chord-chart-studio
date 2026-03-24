@@ -16,6 +16,11 @@ const editorModeOptions = {
 		'columnsCount',
 
 		'fontSize',
+
+		'printChordColor',
+		'printChordSizePercent',
+		'printChordBold',
+		'printChordShadowStrength',
 	],
 	print: [
 		'transposeValue',
@@ -33,6 +38,11 @@ const editorModeOptions = {
 		'documentMargins',
 
 		'fontSize',
+
+		'printChordColor',
+		'printChordSizePercent',
+		'printChordBold',
+		'printChordShadowStrength',
 	],
 	export: [
 		'chartFormat',

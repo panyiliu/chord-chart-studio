@@ -24,7 +24,7 @@ describe('FileManager', () => {
 			expect(allFiles.length).toBe(0);
 
 			// Create new File
-			const newFileBtn = getByText('New');
+			const newFileBtn = getByText('空白');
 			act(() => {
 				fireEvent.click(newFileBtn);
 			});
@@ -52,7 +52,7 @@ describe('FileManager', () => {
 			expect(allFiles.length).toBe(0);
 
 			// Create new File
-			const newFileBtn = getByText('New');
+			const newFileBtn = getByText('空白');
 			act(() => {
 				fireEvent.click(newFileBtn);
 			});
@@ -62,7 +62,7 @@ describe('FileManager', () => {
 			expect(allFiles.length).toBe(1);
 
 			// Delete file
-			const deleteFileBtn = getByText('Delete');
+			const deleteFileBtn = getByText('删除');
 			act(() => {
 				fireEvent.click(deleteFileBtn);
 			});

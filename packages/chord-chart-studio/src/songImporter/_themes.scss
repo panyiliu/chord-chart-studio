@@ -1,5 +1,19 @@
 $themes: (
-	light: (),
+	light: (
+		header-txt: cv(light-foreground, fade),
+		header-bg: cv(light-secondary),
+		header-border: cv(light-foreground, light20),
+		modal-bg: cv(light-background),
+		modal-border: cv(light-foreground, light20),
+		modal-txt: cv(light-foreground),
+		input-bg: cv(light-secondary),
+		input-txt: cv(light-foreground),
+		inputHeader-txt: cv(light-foreground, fade),
+		inputHeader-bg: cv(light-primary),
+		preview-bg: cv(light-secondary),
+		previewError-bg: cv(light-red, light20),
+		previewError-txt: cv(light-foreground),
+	),
 	dark: (
 		// header
 		header-txt: cv(dark-foreground, fade),

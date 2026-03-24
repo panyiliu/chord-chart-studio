@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import InputFormatEntry from './InputFormatEntry';
+import { useI18n } from '../../ui/i18n/I18nProvider';
 
 const allEntries = [
 	{
@@ -20,13 +21,14 @@ const allEntries = [
 
 function InputFormatSelector(props) {
 	const { setInputFormat, inputFormat, disableAll } = props;
+	const { t } = useI18n();
 
 	const rendered = allEntries.map((entry) => (
 		<InputFormatEntry
 			setInputFormat={setInputFormat}
 			id={entry.id}
 			key={entry.id}
-			label={entry.label}
+			label={t(entry.label)}
 			inputFormat={inputFormat}
 			isDisabled={disableAll}
 		/>
@@ -34,7 +36,7 @@ function InputFormatSelector(props) {
 
 	return (
 		<div className={'sim-InputFormat'}>
-			Input format:
+			{t('Input format:')}
 			{rendered}
 		</div>
 	);

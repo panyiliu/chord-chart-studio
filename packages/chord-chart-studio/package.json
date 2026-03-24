@@ -43,6 +43,9 @@
     "dompurify": "^3.0.8",
     "file-saver": "^2.0.5",
     "filesize": "^10.1.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
+    "jszip": "^3.10.1",
     "lodash": "^4.17.21",
     "lucide-react": "^0.349.0",
     "modern-normalize": "^2.0.0",
@@ -79,6 +82,7 @@
     "preview": "npx vite preview",
     "size": "npx size-limit",
     "sloc": "echo \"Source code:\" > SLOC && npx sloc src >> SLOC && echo \"Tests:\" >> SLOC && npx sloc tests >> SLOC && echo \"Total:\" >> SLOC && npx sloc src tests >> SLOC",
+    "print-ai-env": "node scripts/printChordStudioAiEnv.js",
     "test": "npx jest",
     "unit": "npx jest tests/unit",
     "version": "node src/core/createGetVersions.js",
@@ -93,6 +97,10 @@
     {
       "path": "./build/assets/vendor-*.js",
       "limit": "300 KB"
+    },
+    {
+      "path": "./build/assets/pdf-export-*.js",
+      "limit": "600 KB"
     }
   ]
 }

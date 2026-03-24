@@ -3,18 +3,23 @@ import './Slider.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useI18n } from '../../../i18n/I18nProvider';
+
 function Slider(props) {
 	const {
 		isInteractable,
 		label,
 		min,
 		max,
+		step,
+		valueSuffix,
 		showPlusSymbol,
 		optionContext,
 		optionKey,
 		optionValue,
 		setOption,
 	} = props;
+	const { t } = useI18n();
 
 	const classNames = ['sb-optionSlider'];
 	if (!isInteractable) {
@@ -25,17 +30,23 @@ function Slider(props) {
 		setOption(optionContext, optionKey, Number.parseInt(e.target.value));
 	}
 
-	const valueDisplay =
-		optionValue > 0 && showPlusSymbol ? '+' + optionValue : optionValue;
+	let valueDisplay;
+	if (valueSuffix !== undefined && valueSuffix !== '') {
+		valueDisplay = optionValue + valueSuffix;
+	} else {
+		valueDisplay =
+			optionValue > 0 && showPlusSymbol ? '+' + optionValue : optionValue;
+	}
 
 	return (
 		<div className={classNames.join(' ')}>
-			<div className={'sb-optionSlider-desc'}>{label}</div>
+			<div className={'sb-optionSlider-desc'}>{t(label)}</div>
 			<div className={'sb-optionSlider-value'}>{valueDisplay}</div>
 			<div className={'sb-optionSlider-range'}>
 				<input
 					min={min}
 					max={max}
+					step={step ?? 1}
 					value={optionValue}
 					type={'range'}
 					onChange={isInteractable ? handleChange : null}
@@ -51,6 +62,8 @@ Slider.propTypes = {
 	label: PropTypes.string.isRequired,
 	min: PropTypes.number.isRequired,
 	max: PropTypes.number.isRequired,
+	step: PropTypes.number,
+	valueSuffix: PropTypes.string,
 	showPlusSymbol: PropTypes.bool,
 	optionContext: PropTypes.string.isRequired,
 	optionKey: PropTypes.string.isRequired,
@@ -60,6 +73,8 @@ Slider.propTypes = {
 
 Slider.defaultProps = {
 	showPlusSymbol: true,
+	step: undefined,
+	valueSuffix: undefined,
 };
 
 export default React.memo(Slider);

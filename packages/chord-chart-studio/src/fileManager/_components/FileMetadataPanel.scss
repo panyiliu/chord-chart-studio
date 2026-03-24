@@ -1,0 +1,357 @@
+@import '../../../scss/abstract';
+@import '../themes';
+
+.fileMetadataPanel {
+	padding: 8px;
+	margin: 0;
+	border-radius: 12px;
+	box-sizing: border-box;
+	width: 100%;
+	min-width: 0;
+	@include themify($themes) {
+		background-color: themed('actions-bg');
+		border: 1px solid themed('fileEntry-border');
+		color: themed('fileEntry-txt');
+		box-shadow:
+			0 10px 30px rgba(2, 6, 23, 0.08),
+			0 0 0 1px rgba(15, 23, 42, 0.04);
+	}
+}
+
+.fileMetadataPanel-title {
+	font-weight: 600;
+	@include font-size(small);
+	margin: 0 0 8px;
+	letter-spacing: 0.04em;
+	@include themify($themes) {
+		color: themed('fileEntry-txt');
+	}
+}
+
+.fileMetadataPanel-empty {
+	margin: 0;
+	line-height: 1.4;
+	@include font-size(small);
+	opacity: 0.78;
+	@include themify($themes) {
+		color: themed('fileManager-sectionTitle');
+	}
+}
+
+.fileMetadataPanel-label {
+	display: block;
+	margin-top: 8px;
+	margin-bottom: 4px;
+	@include font-size(small);
+	@include themify($themes) {
+		color: themed('fileEntry-txt');
+	}
+}
+
+.fileMetadataPanel-label:first-of-type {
+	margin-top: 0;
+}
+
+.fileMetadataPanel-input {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 4px $spacer-tiny;
+	margin-bottom: $spacer-tiny;
+	font: inherit;
+	@include font-size(small);
+	@include themify($themes) {
+		color: themed('fileEntry-txt');
+		background-color: themed('actions-bg');
+		border: 1px solid themed('fileEntry-border');
+	}
+
+	&:focus-visible {
+		@include themify($themes) {
+			border-color: themed('fileEntry-bgActive');
+			box-shadow: 0 0 0 2px themed('fileEntry-bgActive');
+		}
+		outline: none;
+	}
+}
+
+.fileMetadataPanel-dropSection {
+	margin-top: 8px;
+}
+
+.fileMetadataPanel-dropToggle {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 6px 8px;
+	margin: 0;
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+	border-radius: 8px;
+	min-width: 0;
+	transition: $transition-interactive;
+
+	@include themify($themes) {
+		color: themed('fileEntry-txt');
+		background-color: themed('actions-bg');
+		border: 1px solid themed('fileEntry-border');
+	}
+
+	.icon {
+		flex-shrink: 0;
+		opacity: 0.88;
+		@include font-size(small);
+	}
+
+	&:focus-visible {
+		@include themify($themes) {
+			box-shadow: 0 0 0 2px themed('fileEntry-bgActive');
+			border-color: themed('fileEntry-bgActive');
+		}
+		outline: none;
+	}
+}
+
+.fileMetadataPanel-dropToggle--open {
+	@include themify($themes) {
+		border-color: themed('fileEntry-bgActive');
+		box-shadow: 0 0 0 1px themed('fileEntry-bgActive');
+	}
+}
+
+.fileMetadataPanel-dropLabel {
+	flex-shrink: 0;
+	font-weight: 700;
+	@include font-size(tiny);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	@include themify($themes) {
+		color: themed('fileManager-sectionTitle');
+	}
+}
+
+.fileMetadataPanel-dropSummary {
+	flex: 1;
+	min-width: 0;
+	text-align: right;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	@include font-size(tiny);
+	opacity: 0.9;
+	font-weight: 500;
+}
+
+.fileMetadataPanel-dropBody {
+	margin-top: 6px;
+	padding: 8px;
+	border-radius: 12px;
+	box-sizing: border-box;
+
+	@include themify($themes) {
+		background-color: themed('actions-bg');
+		border: 1px solid themed('fileEntry-border');
+		box-shadow:
+			0 10px 28px rgba(2, 6, 23, 0.06),
+			0 0 0 1px rgba(15, 23, 42, 0.03);
+	}
+}
+
+.fileMetadataPanel-dropHint {
+	margin: 0 0 8px;
+	line-height: 1.35;
+	@include font-size(tiny);
+	opacity: 0.82;
+}
+
+.fileMetadataPanel-dropPrimaryBtn {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 6px $spacer-tiny;
+	margin: 0 0 8px;
+	font: inherit;
+	cursor: pointer;
+	border-radius: 8px;
+	@include font-size(small);
+	font-weight: 600;
+	transition: $transition-interactive;
+
+	@include themify($themes) {
+		color: themed('fileEntry-txt');
+		background-color: themed('fileEntry-bgHover');
+		border: 1px solid themed('fileEntry-border');
+	}
+
+	&:focus-visible {
+		@include themify($themes) {
+			box-shadow: 0 0 0 2px themed('fileEntry-bgActive');
+			border-color: themed('fileEntry-bgActive');
+		}
+		outline: none;
+	}
+}
+
+.fileMetadataPanel-dropList {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.fileMetadataPanel-dropRow {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 6px;
+	padding: 3px 0;
+	min-width: 0;
+	@include font-size(small);
+}
+
+.fileMetadataPanel-dropPick {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex: 1;
+	min-width: 0;
+	cursor: pointer;
+
+	@include themify($themes) {
+		color: themed('fileEntry-txt');
+	}
+
+	input {
+		margin: 0;
+		flex-shrink: 0;
+		cursor: pointer;
+	}
+}
+
+.fileMetadataPanel-dropPickText {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.fileMetadataPanel-dropActions {
+	flex: 0 0 auto;
+	display: flex;
+	gap: 4px;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+}
+
+.fileMetadataPanel-dropMiniBtn {
+	cursor: pointer;
+	padding: 2px 6px;
+	font: inherit;
+	border-radius: 6px;
+	@include font-size(tiny);
+	transition: $transition-interactive;
+
+	@include themify($themes) {
+		color: themed('fileEntry-txt');
+		background-color: themed('actions-bg');
+		border: 1px solid themed('fileEntry-border');
+	}
+
+	&:focus-visible {
+		@include themify($themes) {
+			box-shadow: 0 0 0 2px themed('fileEntry-bgActive');
+			border-color: themed('fileEntry-bgActive');
+		}
+		outline: none;
+	}
+}
+
+.fileMetadataPanel-tagAssignList {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 8px;
+}
+
+.fileMetadataPanel-tagAssignRow {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 4px 2px;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: $transition-interactive;
+	@include font-size(small);
+
+	@include themify($themes) {
+		color: themed('fileEntry-txt');
+	}
+
+	input {
+		margin: 0;
+		cursor: pointer;
+		flex-shrink: 0;
+	}
+
+	&:hover {
+		@include themify($themes) {
+			background-color: themed('fileEntry-bgHover');
+		}
+	}
+
+	&:focus-within {
+		@include themify($themes) {
+			box-shadow: 0 0 0 2px themed('fileEntry-bgActive');
+		}
+	}
+}
+
+.fileMetadataPanel-dropEmpty {
+	padding: 6px 2px;
+	@include font-size(tiny);
+	opacity: 0.75;
+	font-style: italic;
+}
+
+.fileMetadataPanel-dropDivider {
+	height: 1px;
+	margin: 8px 0;
+	border: 0;
+	@include themify($themes) {
+		background-color: themed('fileEntry-border');
+	}
+}
+
+.fileMetadataPanel-dropSubhead {
+	@include font-size(tiny);
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	margin-bottom: 6px;
+	opacity: 0.88;
+	@include themify($themes) {
+		color: themed('fileManager-sectionTitle');
+	}
+}
+
+.fileMetadataPanel-dropManageList {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.fileMetadataPanel-dropManageRow {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 6px;
+	padding: 4px 0;
+	min-width: 0;
+	@include font-size(small);
+}
+
+.fileMetadataPanel-dropManageName {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

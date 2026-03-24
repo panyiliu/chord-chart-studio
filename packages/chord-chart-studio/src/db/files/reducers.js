@@ -3,6 +3,10 @@ import clock from '../../core/clock';
 
 import * as actionTypes from './actionsTypes';
 
+import {
+	DB_CATALOG_REMOVE_GENRE,
+	DB_CATALOG_REMOVE_TAG,
+} from '../catalog/actionsTypes';
 import { DB_OPTION_SET_OPTION_VALUE } from '../options/actionsTypes';
 import { UI_LAYOUT_APP_SET_EDITOR_MODE } from '../../ui/layout/app/_state/actionsTypes';
 import { getEditorMode } from '../../ui/layout/app/_state/selectors';
@@ -15,13 +19,16 @@ const initialState = {
 };
 
 function createFile(state, action) {
-	const { id, title, content } = action.payload;
+	const { id, title, content, author, genreId, tagIds } = action.payload;
 
 	const allFiles = { ...state.allFiles };
 	allFiles[id] = {
 		id,
 		title,
 		content,
+		author: author ?? '',
+		genreId: genreId ?? null,
+		tagIds: Array.isArray(tagIds) ? tagIds : [],
 	};
 
 	return {
@@ -31,9 +38,20 @@ function createFile(state, action) {
 }
 
 function updateFile(state, action) {
-	const { id, title, content } = action.payload;
+	const { id, title, content, author, genreId, tagIds } = action.payload;
 
-	if ((!title && typeof content === 'undefined') || !state.allFiles[id]) {
+	if (!state.allFiles[id]) {
+		return state;
+	}
+
+	const hasChange =
+		title !== undefined ||
+		content !== undefined ||
+		author !== undefined ||
+		genreId !== undefined ||
+		tagIds !== undefined;
+
+	if (!hasChange) {
 		return state;
 	}
 
@@ -41,11 +59,20 @@ function updateFile(state, action) {
 
 	allFiles[id] = { ...allFiles[id] };
 
-	if (title) {
+	if (title !== undefined) {
 		allFiles[id].title = title;
 	}
-	if (typeof content !== 'undefined') {
+	if (content !== undefined) {
 		allFiles[id].content = content;
+	}
+	if (author !== undefined) {
+		allFiles[id].author = author;
+	}
+	if (genreId !== undefined) {
+		allFiles[id].genreId = genreId;
+	}
+	if (tagIds !== undefined) {
+		allFiles[id].tagIds = Array.isArray(tagIds) ? tagIds : [];
 	}
 	return {
 		...state,
@@ -67,6 +94,52 @@ function deleteFile(state, action) {
 		...state,
 		allFiles,
 	};
+}
+
+/**
+ * 目录中删除某类型后，引用该类型的曲目 genreId 置空。
+ * @param {typeof initialState} state
+ * @param {string} genreId
+ */
+function clearGenreIdFromAllFiles(state, genreId) {
+	if (!genreId) {
+		return state;
+	}
+	let changed = false;
+	const allFiles = { ...state.allFiles };
+	Object.keys(allFiles).forEach((fid) => {
+		if (allFiles[fid].genreId === genreId) {
+			allFiles[fid] = { ...allFiles[fid], genreId: null };
+			changed = true;
+		}
+	});
+	return changed ? { ...state, allFiles } : state;
+}
+
+/**
+ * 目录中删除某标签后，从所有曲目的 tagIds 中移除该 id。
+ * @param {typeof initialState} state
+ * @param {string} tagId
+ */
+function removeTagIdFromAllFiles(state, tagId) {
+	if (!tagId) {
+		return state;
+	}
+	let changed = false;
+	const allFiles = { ...state.allFiles };
+	Object.keys(allFiles).forEach((fid) => {
+		const cur = allFiles[fid].tagIds;
+		const list = Array.isArray(cur) ? cur : [];
+		if (!list.includes(tagId)) {
+			return;
+		}
+		allFiles[fid] = {
+			...allFiles[fid],
+			tagIds: list.filter((t) => t !== tagId),
+		};
+		changed = true;
+	});
+	return changed ? { ...state, allFiles } : state;
 }
 
 /**
@@ -160,6 +233,10 @@ export default (state = initialState, action = {}, fullState = {}) => {
 			return updateFile(state, action);
 		case actionTypes.DB_FILES_DELETE:
 			return deleteFile(state, action);
+		case DB_CATALOG_REMOVE_GENRE:
+			return clearGenreIdFromAllFiles(state, action.payload.id);
+		case DB_CATALOG_REMOVE_TAG:
+			return removeTagIdFromAllFiles(state, action.payload.id);
 		case DB_OPTION_SET_OPTION_VALUE:
 			return updateFileOption(state, action, fullState);
 		case UI_LAYOUT_APP_SET_EDITOR_MODE:

@@ -12,8 +12,10 @@ import Input from './Input';
 import PreviewError from './PreviewError';
 import InputFormatSelector from './InputFormatSelector';
 import Icon from '../../ui/_components/Icon';
+import { useI18n } from '../../ui/i18n/I18nProvider';
 
 function SongImporter(props) {
+	const { t } = useI18n();
 	const {
 		cancelImport,
 		content,
@@ -78,7 +80,7 @@ function SongImporter(props) {
 					<div className={'sim-Column_Container'}>
 						<div className={'sim-Input_Header'}>
 							<Icon iconName={'arrow_drop_down'} />
-							ChordMark preview
+								{t('ChordMark preview')}
 							<Icon iconName={'arrow_drop_down'} />
 						</div>
 						<div

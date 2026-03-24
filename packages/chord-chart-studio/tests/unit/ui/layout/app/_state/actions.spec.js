@@ -40,4 +40,31 @@ describe('ui/layout/app: actions creators', () => {
 			expect(actual).toEqual(expected);
 		});
 	});
+
+	describe('requestBrowserSystemPrint()', () => {
+		test('should return a valid action', () => {
+			const expected = {
+				type: actionsTypes.UI_LAYOUT_APP_REQUEST_BROWSER_SYSTEM_PRINT,
+				payload: {
+					pdfDocumentTitle: 'Song+PDF',
+				},
+			};
+
+			const actual = actions.requestBrowserSystemPrint({
+				pdfDocumentTitle: 'Song+PDF',
+			});
+
+			expect(actual).toEqual(expected);
+		});
+	});
+
+	describe('clearBrowserSystemPrint()', () => {
+		test('should return a valid action', () => {
+			const actual = actions.clearBrowserSystemPrint();
+
+			expect(actual.type).toBe(
+				actionsTypes.UI_LAYOUT_APP_CLEAR_BROWSER_SYSTEM_PRINT
+			);
+		});
+	});
 });

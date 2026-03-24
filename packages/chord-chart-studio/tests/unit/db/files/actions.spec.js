@@ -16,6 +16,9 @@ describe('db/files: actions creators', () => {
 					id: 'myUUID',
 					title: 'myTitle',
 					content: 'myContent',
+					author: '',
+					genreId: null,
+					tagIds: [],
 				},
 			};
 			const actual = actions.createFile('myTitle', 'myContent');
@@ -32,6 +35,9 @@ describe('db/files: actions creators', () => {
 					id: 'myUUID',
 					title: 'myTitle',
 					content: '',
+					author: '',
+					genreId: null,
+					tagIds: [],
 				},
 			};
 			const actual = actions.createFile('myTitle');
@@ -57,6 +63,9 @@ describe('db/files: actions creators', () => {
 					id: 'myUUID',
 					title: 'myTitle',
 					content: 'myContent',
+					author: '',
+					genreId: null,
+					tagIds: [],
 				},
 			};
 			const actual = actions.importFile('myTitle', 'myContent');
@@ -73,6 +82,9 @@ describe('db/files: actions creators', () => {
 					id: 'myUUID',
 					title: 'myTitle',
 					content: '',
+					author: '',
+					genreId: null,
+					tagIds: [],
 				},
 			};
 			const actual = actions.importFile('myTitle');

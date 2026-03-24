@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import SongRenderer from '../../_containers/SongRenderer';
 
 function PlayRenderer(props) {
-	const { theme, selectedFile, fontSize, columnsCount } = props;
+	const { theme, selectedFile, fontSize, columnsCount, chordStyle } = props;
 
 	const wrapperClassNames = ['playRendererWrapper1'];
 	wrapperClassNames.push('cmTheme-' + theme);
@@ -18,6 +18,7 @@ function PlayRenderer(props) {
 	return (
 		<div
 			className={wrapperClassNames.join(' ')}
+			style={chordStyle}
 			data-testid={'playRendererWrapper1'}
 		>
 			<div className={'playRendererWrapper2'}>
@@ -37,6 +38,7 @@ PlayRenderer.propTypes = {
 	fontSize: PropTypes.number.isRequired,
 	selectedFile: PropTypes.object.isRequired,
 	columnsCount: PropTypes.number.isRequired,
+	chordStyle: PropTypes.object,
 };
 
 export default PlayRenderer;

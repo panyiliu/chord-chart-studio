@@ -1,7 +1,24 @@
 @import '../../../scss/abstract';
 
 $themes: (
-	light: (),
+	light: (
+		button-primary-txt: #ffffff,
+		button-primary-txtHover: #ffffff,
+		button-primary-txtActive: #ffffff,
+		button-primary-txtDisabled: cv(light-foreground, light20),
+		button-primary-bg: #4338ca,
+		button-primary-bgHover: #3730a3,
+		button-primary-bgActive: #312e81,
+		button-primary-bgDisabled: cv(light-foreground, light20),
+		button-secondary-txt: cv(light-foreground),
+		button-secondary-txtHover: cv(light-foreground),
+		button-secondary-txtActive: cv(light-accent, dark10),
+		button-secondary-txtDisabled: cv(light-foreground, light20),
+		button-secondary-bg: #eef2ff,
+		button-secondary-bgHover: #e0e7ff,
+		button-secondary-bgActive: cv(light-foreground, light20),
+		button-secondary-bgDisabled: cv(light-foreground, light20),
+	),
 	dark: (
 		// primary
 		button-primary-txt: cv(dark-primary, dark10),
@@ -13,13 +30,13 @@ $themes: (
 		button-primary-bgActive: cv(dark-accent, light30),
 		button-primary-bgDisabled: cv(dark-secondary, light20),
 		// primary
-		button-secondary-txt: cv(dark-secondary, dark10),
-		button-secondary-txtHover: cv(dark-secondary, dark20),
+		button-secondary-txt: cv(dark-foreground),
+		button-secondary-txtHover: cv(dark-foreground),
 		button-secondary-txtActive: cv(dark-primary),
 		button-secondary-txtDisabled: cv(dark-secondary, light10),
-		button-secondary-bg: cv(dark-foreground, dark30),
-		button-secondary-bgHover: cv(dark-foreground, dark20),
-		button-secondary-bgActive: cv(dark-foreground, dark10),
+		button-secondary-bg: #1f2937,
+		button-secondary-bgHover: #374151,
+		button-secondary-bgActive: #4b5563,
 		button-secondary-bgDisabled: cv(dark-secondary, light20),
 	),
 );
@@ -36,6 +53,8 @@ button {
 	font-weight: bold;
 	text-transform: capitalize;
 	margin: 10px 20px 10px 0;
+	border-radius: 6px;
+	transition: $transition-interactive;
 
 	&:hover {
 		cursor: pointer;

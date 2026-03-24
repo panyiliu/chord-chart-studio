@@ -18,6 +18,12 @@ export default defineConfig(({ mode }) => {
 				output: {
 					manualChunks: (id) => {
 						if (id.includes('node_modules')) {
+							if (
+								id.includes('jspdf') ||
+								id.includes('html2canvas')
+							) {
+								return 'pdf-export';
+							}
 							return 'vendor';
 						}
 					},
