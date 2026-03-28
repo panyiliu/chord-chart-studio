@@ -33,6 +33,41 @@ Stop:
 docker compose down
 ```
 
+Both services use `restart: unless-stopped` in `docker-compose.yml`: after a Docker daemon restart or an unexpected container exit, they are started again automatically. They stay stopped if you run `docker compose down` or `docker stop` (until you start them again).
+
+### Docker: containers “stopping on a schedule” (SIGTERM / graceful shutdown)
+
+If logs show nginx `gracefully shutting down` with exit code `0`, or Node/npm `signal SIGTERM`, that usually means **something outside the app** asked Docker to stop the container (normal shutdown), not an application crash.
+
+**1) See who stopped containers around a given time** (on the host; adjust the time window):
+
+```bash
+docker events --since '2026-03-26T19:15:00' --until '2026-03-26T19:25:00' --filter 'type=container'
+```
+
+```bash
+journalctl -u docker --since "2026-03-26 19:00" --until "2026-03-26 19:30"
+```
+
+Correlate with host reboots:
+
+```bash
+journalctl --list-boots
+journalctl -b -1 | head
+```
+
+**2) Check common causes of periodic stops or recreates**
+
+| Area | What to check |
+|------|----------------|
+| Watchtower / similar | Any container that auto-pulls images and recreates stacks |
+| Portainer / UI | Scheduled stacks, stack updates, or manual stop |
+| Cron | `crontab -l` (root and deploy user); `/etc/cron.*`; scripts calling `docker compose` or `docker stop` |
+| CI/CD | Pipelines that deploy and run `docker compose up --force-recreate` |
+| Host maintenance | `unattended-upgrades`, scheduled reboots |
+
+The application images in this repo do not implement a “timed shutdown”; investigate the host and orchestration layer instead.
+
 ### 2) Build images manually
 
 ```bash

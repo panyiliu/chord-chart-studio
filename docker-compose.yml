@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile
     image: ${CHORD_STUDIO_IMAGE}
     container_name: chord-chart-studio
+    restart: unless-stopped
     ports:
       - "${APP_HOST_PORT}:${APP_CONTAINER_PORT}"
     depends_on:
@@ -16,6 +17,7 @@ services:
       dockerfile: Dockerfile
     image: ${BACKUP_PROXY_IMAGE}
     container_name: chord-chart-studio-backup-proxy
+    restart: unless-stopped
     ports:
       - "${BACKUP_PROXY_HOST_PORT}:${BACKUP_PROXY_CONTAINER_PORT}"
     environment:
