@@ -6,19 +6,22 @@ Chord Chart Studio leverages the ChordMark format, which is the most powerful sy
 
 See it in action here: https://chord-chart-studio.netlify.app
 
+**Docker deployment (full detail: stack, data locations, troubleshooting):** [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
+
 ## Run with Docker
 
 ### 1) Local Docker run (app + backup proxy)
 
-Copy env template first:
+Recommended (uses `.env.example` for Compose variables without creating `.env` first):
+
+```bash
+docker compose --env-file .env.example up -d --build
+```
+
+Alternatively, copy the template and edit values (ports, image tags, proxy CORS):
 
 ```bash
 cp .env.example .env
-```
-
-Then edit `.env` as needed (ports, image tags, proxy CORS).
-
-```bash
 docker compose up -d --build
 ```
 
