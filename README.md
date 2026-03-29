@@ -87,13 +87,13 @@ docker build -t chord-chart-studio-backup-proxy:local ./packages/backup-proxy
 # Login (PAT needs write:packages)
 echo <GH_PAT> | docker login ghcr.io -u <github-username> --password-stdin
 
-# Tag
-docker tag chord-chart-studio:local ghcr.io/panyiliu/chord-chart-studio:latest
-docker tag chord-chart-studio-backup-proxy:local ghcr.io/panyiliu/chord-chart-studio-backup-proxy:latest
+# Tag (replace YOUR_GITHUB_USER with your GitHub username or org)
+docker tag chord-chart-studio:local ghcr.io/YOUR_GITHUB_USER/chord-chart-studio:latest
+docker tag chord-chart-studio-backup-proxy:local ghcr.io/YOUR_GITHUB_USER/chord-chart-studio-backup-proxy:latest
 
 # Push
-docker push ghcr.io/panyiliu/chord-chart-studio:latest
-docker push ghcr.io/panyiliu/chord-chart-studio-backup-proxy:latest
+docker push ghcr.io/YOUR_GITHUB_USER/chord-chart-studio:latest
+docker push ghcr.io/YOUR_GITHUB_USER/chord-chart-studio-backup-proxy:latest
 ```
 
 You can replace `latest` with a version tag such as `v0.14.0-ui-refactor`.

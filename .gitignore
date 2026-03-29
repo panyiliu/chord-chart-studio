@@ -4,6 +4,12 @@ coverage
 .env
 .env.local
 .env.*.local
+# Broad env patterns (never commit secrets); keep tracked examples explicitly allowed below
+.env.*
+!.env.example
+!**/.env.example
+!.env.template
+!**/.env.template
 
 # IDE files
 .idea/**/workspace.xml

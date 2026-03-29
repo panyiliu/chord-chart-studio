@@ -22,7 +22,7 @@ This document describes what the Docker stack in this repository does, how to ru
 From the repository root, **no need to copy `.env` first** if you pass the example file to Compose:
 
 ```bash
-git clone https://github.com/panyiliu/chord-chart-studio.git
+git clone https://github.com/<YOUR_FORK>/chord-chart-studio.git
 cd chord-chart-studio
 docker compose --env-file .env.example up -d --build
 ```
@@ -62,7 +62,7 @@ See [`.env.example`](../.env.example) for comments. Main groups:
 - **backup-proxy runtime**: `BACKUP_PROXY_PORT` (listen port inside the proxy container), `BACKUP_PROXY_CORS_ORIGIN`.
 - **Image tags**: `CHORD_STUDIO_IMAGE`, `BACKUP_PROXY_IMAGE` (used by `docker compose` when not only building locally).
 
-Do **not** commit a real `.env` with secrets; `.env` is listed in `.gitignore`.
+Do **not** commit a real `.env` with secrets; `.env` is listed in `.gitignore`. Do **not** paste Backblaze Account ID, application keys, or other backup credentials into any tracked file—configure cloud backup only in the app (browser) or in untracked local files.
 
 ## Where data lives
 
