@@ -74,6 +74,8 @@ Optional: `bash scripts/export-docker-arm64.sh /path/to/my-stack.tar`
 
 The scripts try `docker buildx build` first, then automatically fall back to `docker build` if Buildx fails (common on some Docker Desktop setups). They verify both images exist before running `docker save`.
 
+On **Windows**, `export-docker-arm64.ps1` **defaults to skipping Buildx** and uses `docker pull --platform linux/arm64` for `node:20-alpine` and `nginx:1.27-alpine`, then `docker build --pull` with retries—this avoids many Docker Desktop Buildx gRPC errors and stale base-image metadata. Set `CHORD_STUDIO_EXPORT_BUILDX_FIRST=1` to force the buildx-first path. The script prints the **absolute path** to the generated `.tar` when successful.
+
 This produces `chord-chart-studio-stack-linux-arm64.tar` (gitignored) containing `chord-chart-studio:local` and `chord-chart-studio-backup-proxy:local`, matching [`.env.example`](../.env.example).
 
 **On the target ARM64 host:**
