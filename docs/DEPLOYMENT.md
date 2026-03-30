@@ -72,6 +72,8 @@ Or on Windows (PowerShell):
 
 Optional: `bash scripts/export-docker-arm64.sh /path/to/my-stack.tar`
 
+The scripts try `docker buildx build` first, then automatically fall back to `docker build` if Buildx fails (common on some Docker Desktop setups). They verify both images exist before running `docker save`.
+
 This produces `chord-chart-studio-stack-linux-arm64.tar` (gitignored) containing `chord-chart-studio:local` and `chord-chart-studio-backup-proxy:local`, matching [`.env.example`](../.env.example).
 
 **On the target ARM64 host:**
