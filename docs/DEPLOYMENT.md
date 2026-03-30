@@ -54,6 +54,38 @@ docker compose down
 docker compose logs -f
 ```
 
+## Offline Linux/arm64 image tar (`docker load`)
+
+To move **pre-built images** to an **ARM64** Linux host without a registry, build for `linux/arm64` and save a single archive:
+
+**On a machine with Docker Buildx** (from repository root):
+
+```bash
+bash scripts/export-docker-arm64.sh
+```
+
+Or on Windows (PowerShell):
+
+```powershell
+.\scripts\export-docker-arm64.ps1
+```
+
+Optional: `bash scripts/export-docker-arm64.sh /path/to/my-stack.tar`
+
+This produces `chord-chart-studio-stack-linux-arm64.tar` (gitignored) containing `chord-chart-studio:local` and `chord-chart-studio-backup-proxy:local`, matching [`.env.example`](../.env.example).
+
+**On the target ARM64 host:**
+
+1. Copy the `.tar` plus `docker-compose.yml` and `.env` (or `.env.example` as a starting point).
+2. `docker load -i chord-chart-studio-stack-linux-arm64.tar`
+3. Start **without** rebuilding (uses loaded images):
+
+```bash
+docker compose --env-file .env up -d
+```
+
+Cross-building from **amd64** to **arm64** is slower and uses QEMU; building **on** an ARM64 machine avoids that. Verify: `docker image inspect chord-chart-studio:local --format '{{.Architecture}}'` should print `arm64`.
+
 ## Environment variables
 
 See [`.env.example`](../.env.example) for comments. Main groups:

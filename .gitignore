@@ -19,3 +19,6 @@ coverage
 .DS_Store
 
 *storybook.log
+
+# Docker image export (large; do not commit)
+chord-chart-studio-stack-linux-arm64.tar

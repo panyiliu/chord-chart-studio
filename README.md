@@ -8,6 +8,8 @@ See it in action here: https://chord-chart-studio.netlify.app
 
 **Docker deployment (full detail: stack, data locations, troubleshooting):** [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
 
+**Export linux/arm64 images as a `.tar` for `docker load` on another host:** see section *Offline Linux/arm64 image tar* in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) (`scripts/export-docker-arm64.sh`, `scripts/export-docker-arm64.ps1`).
+
 ## Run with Docker
 
 ### 1) Local Docker run (app + backup proxy)
